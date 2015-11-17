@@ -11,6 +11,7 @@ ul{
   list-style-type: none;
   border: solid 2px red;
   border-radius: 70px 40px;
+  text-decoration: none;
 }
 .bgimg {
     position:fixed;
