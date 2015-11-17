@@ -21,6 +21,10 @@ ul{
     z-index:-1;
     opacity:1;
 }
+#greeting {
+  font-size: 6em;
+  font-family: monospace;
+}
 
 .greeting {
     color:white;
