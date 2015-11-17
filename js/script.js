@@ -34,30 +34,17 @@ function loadData() {
         console.log(articleList);
         for (var i=0; i <articleList.length; i++) {
           articleStr = articleList[i];
+          var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
+          var atkCorp = [];
+          /*for(var atk=0; atk < articleStr.attackers.length; atk++) {
+            atkCorp.push('http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[i].corporationID + '_32.png');
+          }*/
           var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
-          $resElem.append('<li><a href="' + url + '">Name: ' + articleStr.victim.characterName + '  Corporation: ' + articleStr.victim.corporationName + '</a> Value: ' + articleStr.zkb.totalValue + '  Points: ' + articleStr.zkb.points + '</li>');
+          $resElem.append('<li><a href="' + url + '">Name: ' + articleStr.victim.characterName + ' Corporation: ' + '<img src="' + vicCorpUrl + '">' + articleStr.victim.corporationName + '</a>  Value: ' + articleStr.zkb.totalValue + '  Points: ' + articleStr.zkb.points + '</li>');
         }
         clearTimeout(wikiRequestTimeout);
       }
     });
-    /*$.getJSON( search, function( data ) {
-      var items = [];
-      var records = data;
-      console.log( data );
-      console.log(records);
-      //console.log( items );
-      // Need to extract data from the objects returned
-      // Needs lots of work Objects are being parsed rather than strings
-      /*for(var x=0; x < records.length; x++){
-        for(var y=0; y < records[x].length; y++){
-          output = "<li class='victim'>" + records[x][y].victim.characterName +" "+ records[x][y].killTime + " " + records[x][y].solarSystemID + " " + records[x][y].zkb.totalValue + " " + records[x][y].zkb.points + "</li>";
-          $("resElem").append(output);
-          console.log(output);
-        }
-      }
-
-      // end of needs lots of work
-    });*/
     // END OF zkillboard Data Pull
     return false;
 }
