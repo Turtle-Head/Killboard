@@ -36,11 +36,25 @@ function loadData() {
           articleStr = articleList[i];
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
           var atkCorp = [];
-          /*for(var atk=0; atk < articleStr.attackers.length; atk++) {
-            atkCorp.push('http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[i].corporationID + '_32.png');
-          }*/
+          for(var atk=0; atk < articleStr.attackers.length; atk++) {
+            atkCorp[atk] = {
+              "pilotkb" : 'https://zkillboard.com/character/' + articleStr.attackers[atk].characterID + '/',
+              "corpPic" :  'http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_32.png',
+              "corp" : articleStr.attackers[atk].corporationName,
+              "pilot": articleStr.attackers[atk].characterName
+            };
+            /*if (articleStr.attakers[atk].finalBlow == "1"){
+              atkCorp[atk].killer = true;
+            } else {
+              atkCorp[atk].killer = false;
+            }*/
+          }
           var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
-          $resElem.append('<li><a href="' + url + '">Name: ' + articleStr.victim.characterName + ' Corporation: ' + '<img src="' + vicCorpUrl + '">' + articleStr.victim.corporationName + '</a>  Value: ' + articleStr.zkb.totalValue + '  Points: ' + articleStr.zkb.points + '</li>');
+          $resElem.append('<li><a href="' + url + '">Name: ' + articleStr.victim.characterName + ' Corporation: ' + '<img src="' + vicCorpUrl + '">' + articleStr.victim.corporationName + '</a>');
+          for(var fin=0; fin < atkCorp.length; fin++){
+            $resElem.append('  <img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a>');
+          }
+          $resElem.append('  '+ articleStr.zkb.totalValue + '  Points: ' + articleStr.zkb.points + '</li>');
         }
         clearTimeout(wikiRequestTimeout);
       }
