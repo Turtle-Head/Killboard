@@ -1,13 +1,14 @@
 function loadData() {
 
     var $body = $('body');
-    var $nytHeaderElem = $('#results-header');
+    var $vicElem = $('#results-header');
     var $resElem = $('#results-articles');
     var $greeting = $('#greeting');
 
 
     // clear out old data before new request
     $resElem.text("");
+    $vicElem.text("");
 
     // load streetview
     //---------------------
@@ -35,6 +36,7 @@ function loadData() {
         for (var i=0; i <articleList.length; i++) {
           articleStr = articleList[i];
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
+          var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_32.jpg';
           var atkCorp = [];
           for(var atk=0; atk < articleStr.attackers.length; atk++) {
             atkCorp[atk] = {
@@ -50,11 +52,11 @@ function loadData() {
             }*/
           }
           var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
-          $resElem.append('<li><a href="' + url + '">Name: ' + articleStr.victim.characterName + ' Corporation: ' + '<img src="' + vicCorpUrl + '">' + articleStr.victim.corporationName + '</a>');
+          $resElem.append('<ul><li>Victim: <img src="'+ vicPic +'"><img src="' + vicCorpUrl + '">   <a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '<br>');
           for(var fin=0; fin < atkCorp.length; fin++){
-            $resElem.append('  <img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a>');
+            $resElem.append('  <img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>');
           }
-          $resElem.append('  '+ articleStr.zkb.totalValue + '  Points: ' + articleStr.zkb.points + '</li>');
+          $resElem.append(' Value: '+ articleStr.zkb.totalValue + ' ISK  Points: ' + articleStr.zkb.points + '</li></ul>');
         }
         clearTimeout(wikiRequestTimeout);
       }

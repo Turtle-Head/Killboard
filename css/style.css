@@ -1,6 +1,17 @@
 * {box-sizing:border-box;}
-body {background-color: #CCC;}
-
+body {
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+a{
+  color: red;
+}
+ul{
+  list-style-type: none;
+  border: solid 2px red;
+  border-radius: 70px 40px;
+}
 .bgimg {
     position:fixed;
     top: 0;
