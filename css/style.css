@@ -6,6 +6,7 @@ body {
 }
 a{
   color: red;
+  text-decoration: none;
 }
 ul{
   list-style-type: none;
