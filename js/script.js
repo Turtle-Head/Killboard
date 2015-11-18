@@ -42,12 +42,14 @@ function loadData() {
               "corpPic" :  'http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_32.png',
               "corp" : articleStr.attackers[atk].corporationName,
               "pilot": articleStr.attackers[atk].characterName,
-              "pilotP": 'http://imageserver.eveonline.com/Character/'+articleStr.attackers[atk].characterID+'_32.jpg'
+              "pilotP": 'http://imageserver.eveonline.com/Character/'+ articleStr.attackers[atk].characterID +'_32.jpg',
+              "shipPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].shipTypeID + '_32.png',
+              "wepPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].weaponTypeID + '_32.png'
             };
           }
           var formAtk = '<div class="dat">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '<br><a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
+            formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '<br><a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
           }
           formAtk+='</div>';
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
