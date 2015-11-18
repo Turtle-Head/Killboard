@@ -3,12 +3,13 @@
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+  font-family: "Shanti", monospace;
 }
 body {
   background-color: black;
   color: white;
   text-align: center;
-  font-family: monospace;
+  font-family: "Shanti", monospace;
   font-size: 1em;
 }
 a{
@@ -57,7 +58,7 @@ html{
   -moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
   box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
   font-size: 2em;
-  font-family: monospace;
+  font-family: "Shanti", monospace;
 }
 #submit-btn:hover, #submit-btn:focus{
   /*reduce the size of the shadow*/
@@ -84,23 +85,23 @@ html{
 }
 #greeting {
   font-size: 7em;
-  font-family: monospace;
+  font-family: "Shanti", monospace;
 }
 
 .greeting {
     color:white;
-    text-shadow: 1px 1px 3px rgba(255,255,255, .5);
+    text-shadow: 1px 2px 3px rgba(255,255,255, .5);
     text-align: center;
 }
 .loss{
   background-color: rgba(233, 57, 60,0.25);
   font-family: monospace;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 .kill{
   background-color: rgba(85, 244, 61,0.25);
   font-family: monospace;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 .attackers{
   font-family: monospace;
