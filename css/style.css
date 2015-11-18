@@ -21,6 +21,7 @@ li{
   font-size: 2em;
   display: flex;
   flex-flow: row;
+  opacity: 0.85;
 }
 .images{
   box-sizing: content-box;
@@ -72,7 +73,7 @@ html{
 }
 .num{
   color: green;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 #greeting {
   font-size: 6em;
@@ -83,20 +84,6 @@ html{
     color:white;
     text-shadow: 1px 1px 3px rgba(255,255,255, .5);
     text-align: center;
-}
-
-.wikipedia-container {
-    float:right;
-    width:290px;
-    padding:10px;
-    margin-right: 10px;
-
-}
-
-.nytimes-container {
-    padding: 10px;
-    margin-right:300px;
-
 }
 .loss{
   background-color: rgba(233, 57, 60,0.25);
@@ -113,18 +100,10 @@ html{
   box-sizing: content-box;
   flex-flow: row;
 }
-.article-list {
-    margin: 0;
-    padding: 0;
-}
-
 .victim {
     list-style-type: none;
     padding:10px;
     border-top: 1px solid #CCC;
-}
-.article:first-child {
-    border-top:none;
 }
 .credits {
   color:white;
