@@ -15,11 +15,23 @@ a{
   color: red;
   text-decoration: none;
 }
-ul{
+ul,
+li{
   list-style-type: none;
-  border: solid 2px red;
-  border-radius: 70px 40px;
   font-size: 2em;
+  display: flex;
+  flex-flow: row;
+}
+.images{
+  box-sizing: content-box;
+  flex-flow: row;
+}
+.ids{
+  box-sizing: content-box;
+  flex-flow: row;
+}
+div{
+  padding: 10px;
 }
 html{
   font-size:100%;
@@ -78,15 +90,29 @@ html{
     width:290px;
     padding:10px;
     margin-right: 10px;
-    background-color: rgba(255,255,255,0.7);
+
 }
 
 .nytimes-container {
     padding: 10px;
     margin-right:300px;
-    background-color: rgba(255,255,255,0.7);
-}
 
+}
+.loss{
+  background-color: rgba(233, 57, 60,0.25);
+  font-family: monospace;
+  font-size: 2em;
+}
+.kill{
+  background-color: rgba(85, 244, 61,0.25);
+  font-family: monospace;
+  font-size: 2em;
+}
+.attackers{
+  font-family: monospace;
+  box-sizing: content-box;
+  flex-flow: row;
+}
 .article-list {
     margin: 0;
     padding: 0;
