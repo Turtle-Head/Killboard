@@ -27,8 +27,8 @@ function loadData() {
       dataType: "jsonp",
       //jsonp: "callback",
       success: function( response ){
-        // Writes Wiki articles out to page
-
+        // Writes kill articles out to page
+        $resElem.append('<ul>');
         var articleList = response;
         console.log(articleList);
         for (var i=0; i <articleList.length; i++) {
@@ -44,24 +44,26 @@ function loadData() {
               "pilotkb" : 'https://zkillboard.com/character/' + articleStr.attackers[atk].characterID + '/',
               "corpPic" :  'http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_32.png',
               "corp" : articleStr.attackers[atk].corporationName,
-              "pilot": articleStr.attackers[atk].characterName
+              "pilot": articleStr.attackers[atk].characterName,
+              "pilotP": 'http://imageserver.eveonline.com/Character/'+articleStr.attackers[atk].characterID+'_32.jpg'
             };
           }
-          var formAtk = '<div class="ids">';
+          var formAtk = '<div class="dat">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>';
+            formAtk+='<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '<br><a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">' + atkCorp[fin].pilot + '</a><br>';
           }
           formAtk+='</div>';
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
-          var formISKP ='<div class="ids">ISK Value: <div class="num">'+ value + '</div> Points: ' + articleStr.zkb.points + '</div>';
+          var formISKP ='<div class="dat">ISK Value: <div class="num">'+ value + '</div> Points: ' + articleStr.zkb.points + '</div>';
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
           if(articleStr.victim.corporationID == corporation){
-            $resElem.append('<li class="loss"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '</div>' + formISKP + '<hr><div class="attackers">' + formAtk +'</li></ul><hr>');
+            $resElem.append('<li class="loss"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP + '</div>' + '<hr><div class="attackers">' + formAtk +'</li><hr>');
           } else {
-            $resElem.append('<li class="kill"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + '</div>'+ formISKP +'<hr><div class="attackers">' + formAtk + '</li></ul><hr>');
+            $resElem.append('<li class="kill"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP +'</div>'+ '<hr><div class="attackers">' + formAtk + '</li><hr>');
           }
         }
+        $resElem.append('</ul>');
         clearTimeout(killRequestTimeout);
       }
     });

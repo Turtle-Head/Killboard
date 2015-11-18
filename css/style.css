@@ -26,10 +26,12 @@ li{
 .images{
   box-sizing: content-box;
   flex-flow: row;
+  width: 33%;
 }
 .ids{
   box-sizing: content-box;
   flex-flow: row;
+  width: 33%;
 }
 div{
   padding: 10px;
@@ -97,6 +99,10 @@ html{
 }
 .attackers{
   font-family: monospace;
+  box-sizing: content-box;
+  flex-flow: row;
+}
+.dat{
   box-sizing: content-box;
   flex-flow: row;
 }
