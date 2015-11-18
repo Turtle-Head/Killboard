@@ -8,6 +8,8 @@ body {
   background-color: black;
   color: white;
   text-align: center;
+  font-family: monospace;
+  font-size: 1em;
 }
 a{
   color: red;
@@ -17,6 +19,7 @@ ul{
   list-style-type: none;
   border: solid 2px red;
   border-radius: 70px 40px;
+  font-size: 2em;
 }
 html{
   font-size:100%;
