@@ -50,7 +50,7 @@ function loadData() {
           }
           var formAtk = '<div class="dat">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '<br><a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">' + atkCorp[fin].pilot + '</a><br>';
+            formAtk+='<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '<br><a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
           }
           formAtk+='</div>';
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
