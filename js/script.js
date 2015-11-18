@@ -14,11 +14,16 @@ function loadData() {
     var corporation = "98270563";
     var output = "";
     // End of
-
+    var d = new Date();
+    var m = d.getMonth()+1;
+    var y = d.getFullYear();
+    console.log(m);
+    console.log(d);
     // zkillboard JSON Data kill pull and parse
-    var searchk = "https://zkillboard.com/api/kills/corporationID/" + corporation + "/" ;
+
+    var searchk = "https://zkillboard.com/api/kills/corporationID/" + corporation + "/year/" + y + "/month/" + m + "/";
     var killsRequestTimeout = setTimeout(function(){
-      $resElem.text("Failed to get kill data");
+      $kilElem.text("Failed to get kill data");
     }, 8000);
     $.ajax({
       url: searchk,
@@ -29,7 +34,7 @@ function loadData() {
 
         var articleList = response;
         console.log(articleList);
-        for (var i=0; i < 15; i++) {
+        for (var i=0; i < articleList.length; i++) {
           articleStr = articleList[i];
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_32.jpg';
@@ -59,9 +64,9 @@ function loadData() {
       }
     });
 
-    var searchl = "https://zkillboard.com/api/losses/corporationID/" + corporation + "/" ;
+    var searchl = "https://zkillboard.com/api/losses/corporationID/" + corporation + "/year/" + y + "/month/" + m + "/";
     var lossesRequestTimeout = setTimeout(function(){
-      $resElem.text("Failed to get losses data");
+      $losElem.text("Failed to get losses data");
     }, 8000);
     $.ajax({
       url: searchl,
@@ -72,7 +77,7 @@ function loadData() {
 
         var articleList = response;
         console.log(articleList);
-        for (var i=0; i < 15; i++) {
+        for (var i=0; i < articleList.length; i++) {
           articleStr = articleList[i];
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_32.jpg';
@@ -98,7 +103,7 @@ function loadData() {
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
           $losElem.append('</div> ISK Value: <div class="numl">'+ value + '</div> Points: ' + articleStr.zkb.points + '</li>');
         }
-        clearTimeout(wikiRequestTimeout);
+        clearTimeout(lossesRequestTimeout);
       }
     });
     // END OF zkillboard Data Pull
