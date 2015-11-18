@@ -11,14 +11,17 @@ body {
   font-family: monospace;
   font-size: 1em;
 }
+.results-list{
+  font-size: 2em;
+}
 a{
   color: red;
   text-decoration: none;
 }
 ul{
   list-style-type: none;
-  border: solid 2px red;
-  border-radius: 70px 40px;
+  /*border: solid 2px red;
+  border-radius: 70px 40px;*/
   font-size: 2em;
 }
 html{
@@ -29,6 +32,15 @@ html{
   -webkit-text-size-adjust:none;}
 @media only screen and (max-width:480px){
   body{font-size:12px;}
+}
+.attacker{
+  font-size: 1.5em;
+}
+h3{
+  font-size: 2em;
+}
+h4{
+  font-size: 1.5em;
 }
 #submit-btn{
   color: white;
@@ -58,9 +70,13 @@ html{
     z-index:-1;
     opacity:1;
 }
-.num{
+.numk{
   color: green;
-  font-size: 2em;
+  font-size: 1.5em;
+}
+.numl{
+  color: red;
+  font-size: 1.5em;
 }
 #greeting {
   font-size: 6em;
@@ -72,22 +88,29 @@ html{
     text-shadow: 1px 1px 3px rgba(255,255,255, .5);
     text-align: center;
 }
-
-.wikipedia-container {
-    float:right;
-    width:290px;
+.losses{
+  background-color: rgba(231, 13, 13,0.5);
+}
+.kills{
+  background-color: rgba(85, 244, 61,0.5);
+}
+.losses-container {
+    width:100%;
     padding:10px;
-    margin-right: 10px;
-    background-color: rgba(255,255,255,0.7);
+    align-self: center;
 }
-
-.nytimes-container {
+#kills-header{
+  background-color: rgba(85, 244, 61,0.5);
+}
+.kills-container {
+    width: 100%;
     padding: 10px;
-    margin-right:300px;
-    background-color: rgba(255,255,255,0.7);
+    align-self: center;
 }
-
-.article-list {
+#losses-header{
+  background-color: rgba(231, 13, 13,0.5);
+}
+.kills-list {
     margin: 0;
     padding: 0;
 }

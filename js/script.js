@@ -1,26 +1,27 @@
 function loadData() {
 
     var $body = $('body');
-    var $vicElem = $('#results-header');
-    var $resElem = $('#results-articles');
+    var $vicElem = $('#kills-header');
+    var $kilElem = $('#kills-articles');
+    var $losElem = $('#losses-articles');
     var $greeting = $('#greeting');
 
 
     // clear out old data before new request
-    $resElem.text("");
-    $vicElem.text("");
+    $kilElem.text("");
+    $losElem.text("");
 
     var corporation = "98270563";
     var output = "";
     // End of
 
-    // zkillboard JSON Data pull and parse
-    var search = "https://zkillboard.com/api/corporationID/" + corporation + "/" ;
-    var wikiRequestTimeout = setTimeout(function(){
+    // zkillboard JSON Data kill pull and parse
+    var searchk = "https://zkillboard.com/api/kills/corporationID/" + corporation + "/" ;
+    var killsRequestTimeout = setTimeout(function(){
       $resElem.text("Failed to get kill data");
     }, 8000);
     $.ajax({
-      url: search,
+      url: searchk,
       dataType: "jsonp",
       //jsonp: "callback",
       success: function( response ){
@@ -28,7 +29,7 @@ function loadData() {
 
         var articleList = response;
         console.log(articleList);
-        for (var i=0; i <articleList.length; i++) {
+        for (var i=0; i < 15; i++) {
           articleStr = articleList[i];
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_32.jpg';
@@ -47,17 +48,59 @@ function loadData() {
             }*/
           }
           var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
-          $resElem.append('<ul><li>Victim: <img src="'+ vicPic +'"><img src="' + vicCorpUrl + '">   <a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '<br>');
+          $kilElem.append('<li><h4 class="kills">Victim: <img src="'+ vicPic +'"><img src="' + vicCorpUrl + '">   <a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '</h3><br><div class="attacker">');
           for(var fin=0; fin < atkCorp.length; fin++){
-            $resElem.append('  <img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>');
+            $kilElem.append('<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>');
           }
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
-          $resElem.append(' ISK Value: <div class="num">'+ value + '</div> Points: ' + articleStr.zkb.points + '</li></ul>');
+          $kilElem.append('</div> ISK Value: <div class="numk">'+ value + '</div> Points: ' + articleStr.zkb.points + '</li>');
+        }
+        clearTimeout(killsRequestTimeout);
+      }
+    });
+
+    var searchl = "https://zkillboard.com/api/losses/corporationID/" + corporation + "/" ;
+    var lossesRequestTimeout = setTimeout(function(){
+      $resElem.text("Failed to get losses data");
+    }, 8000);
+    $.ajax({
+      url: searchl,
+      dataType: "jsonp",
+      //jsonp: "callback",
+      success: function( response ){
+        // Writes Wiki articles out to page
+
+        var articleList = response;
+        console.log(articleList);
+        for (var i=0; i < 15; i++) {
+          articleStr = articleList[i];
+          var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
+          var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_32.jpg';
+          var atkCorp = [];
+          for(var atk=0; atk < articleStr.attackers.length; atk++) {
+            atkCorp[atk] = {
+              "pilotkb" : 'https://zkillboard.com/character/' + articleStr.attackers[atk].characterID + '/',
+              "corpPic" :  'http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_32.png',
+              "corp" : articleStr.attackers[atk].corporationName,
+              "pilot": articleStr.attackers[atk].characterName
+            };
+            /*if (articleStr.attakers[atk].finalBlow == "1"){
+              atkCorp[atk].killer = true;
+            } else {
+              atkCorp[atk].killer = false;
+            }*/
+          }
+          var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
+          $losElem.append('<li><h4 class="losses">Victim: <img src="'+ vicPic +'"><img src="' + vicCorpUrl + '">   <a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '</h3><br><div class="attacker">');
+          for(var fin=0; fin < atkCorp.length; fin++){
+            $losElem.append('<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>');
+          }
+          var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
+          $losElem.append('</div> ISK Value: <div class="numl">'+ value + '</div> Points: ' + articleStr.zkb.points + '</li>');
         }
         clearTimeout(wikiRequestTimeout);
       }
     });
-
     // END OF zkillboard Data Pull
     return false;
 }
