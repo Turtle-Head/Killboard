@@ -76,6 +76,11 @@ html{
 .num{
   color: green;
   font-size: 1.5em;
+  box-sizing: content-box;
+  flex-flow: row;
+  width: 100%;
+  text-align:center;
+  padding: 0;
 }
 #greeting {
   font-size: 7em;
@@ -106,6 +111,12 @@ html{
 .dat{
   box-sizing: content-box;
   flex-flow: row;
+}
+.dat2{
+  box-sizing: content-box;
+  flex-flow: row;
+  width: 100%;
+  padding: 0;
 }
 .victim {
     list-style-type: none;

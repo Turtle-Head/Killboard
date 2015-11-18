@@ -44,16 +44,17 @@ function loadData() {
               "pilot": articleStr.attackers[atk].characterName,
               "pilotP": 'http://imageserver.eveonline.com/Character/'+ articleStr.attackers[atk].characterID +'_32.jpg',
               "shipPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].shipTypeID + '_32.png',
-              "wepPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].weaponTypeID + '_32.png'
+              "wepPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].weaponTypeID + '_32.png',
+              "corpKB": 'http://zkillboard.com/corporation/' + articleStr.attackers[atk].corporationID + '/'
             };
           }
           var formAtk = '<div class="dat">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '<br><a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
+            formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><a href="' + atkCorp[fin].corpKB + '"><img src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '"></a>  ' /*+ atkCorp[fin].corp*/ + '<a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
           }
           formAtk+='</div>';
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
-          var formISKP ='<div class="dat">ISK Value: <div class="num">'+ value + '</div> Points: ' + articleStr.zkb.points + '</div>';
+          var formISKP ='<div class="dat"><div class="dat2">ISK Value: <div class="num">'+ value + '</div></div><div class="dat2" width="33%"> Points: ' + articleStr.zkb.points + '</div></div>';
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
           if(articleStr.victim.corporationID == corporation){
