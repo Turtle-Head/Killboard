@@ -13,10 +13,13 @@ function loadData() {
     var corporation = "98270563";
     var output = "";
     // End of
+    var d = new Date();
+    var y = d.getFullYear();
+    var m  = d.getMonth()+1;
 
     // zkillboard JSON Data pull and parse
-    var search = "https://zkillboard.com/api/corporationID/" + corporation + "/" ;
-    var wikiRequestTimeout = setTimeout(function(){
+    var search = "https://zkillboard.com/api/corporationID/" + corporation + "/year/" + y + "/month/" + m + "/";
+    var killRequestTimeout = setTimeout(function(){
       $resElem.text("Failed to get kill data");
     }, 8000);
     $.ajax({
@@ -30,8 +33,11 @@ function loadData() {
         console.log(articleList);
         for (var i=0; i <articleList.length; i++) {
           articleStr = articleList[i];
-          var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png';
-          var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_32.jpg';
+          var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
+
+          //$resElem.append('Victim: <img src="'+ vicPic +'"><img src="' + vicCorpUrl + '">   <a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '<br><hr><div class="attackers">');
+
+
           var atkCorp = [];
           for(var atk=0; atk < articleStr.attackers.length; atk++) {
             atkCorp[atk] = {
@@ -40,21 +46,23 @@ function loadData() {
               "corp" : articleStr.attackers[atk].corporationName,
               "pilot": articleStr.attackers[atk].characterName
             };
-            /*if (articleStr.attakers[atk].finalBlow == "1"){
-              atkCorp[atk].killer = true;
-            } else {
-              atkCorp[atk].killer = false;
-            }*/
           }
-          var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
-          $resElem.append('<ul><li>Victim: <img src="'+ vicPic +'"><img src="' + vicCorpUrl + '">   <a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '<br>');
+          var formAtk = '<div class="ids">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            $resElem.append('  <img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>');
+            formAtk+='<img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>';
           }
+          formAtk+='</div>';
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
-          $resElem.append(' ISK Value: <div class="num">'+ value + '</div> Points: ' + articleStr.zkb.points + '</li></ul>');
+          var formISKP ='<div class="ids">ISK Value: <div class="num">'+ value + '</div> Points: ' + articleStr.zkb.points + '</div>';
+          var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
+          var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
+          if(articleStr.victim.corporationID == corporation){
+            $resElem.append('<li class="loss"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '</div>' + formISKP + '<hr><div class="attackers">' + formAtk +'</li></ul><hr>');
+          } else {
+            $resElem.append('<li class="kill"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + '</div>'+ formISKP +'<hr><div class="attackers">' + formAtk + '</li></ul><hr>');
+          }
         }
-        clearTimeout(wikiRequestTimeout);
+        clearTimeout(killRequestTimeout);
       }
     });
 
