@@ -58,6 +58,10 @@ html{
     z-index:-1;
     opacity:1;
 }
+.num{
+  color: green;
+  font-size: 2em;
+}
 #greeting {
   font-size: 6em;
   font-family: monospace;

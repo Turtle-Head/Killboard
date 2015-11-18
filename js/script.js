@@ -13,7 +13,7 @@ function loadData() {
     var corporation = "98270563";
     var output = "";
     // End of
-    
+
     // zkillboard JSON Data pull and parse
     var search = "https://zkillboard.com/api/corporationID/" + corporation + "/" ;
     var wikiRequestTimeout = setTimeout(function(){
@@ -52,7 +52,7 @@ function loadData() {
             $resElem.append('  <img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>');
           }
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
-          $resElem.append(' Value: '+ value + ' ISK  Points: ' + articleStr.zkb.points + '</li></ul>');
+          $resElem.append(' ISK Value: <div class="num">'+ value + '</div> Points: ' + articleStr.zkb.points + '</li></ul>');
         }
         clearTimeout(wikiRequestTimeout);
       }
