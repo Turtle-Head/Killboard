@@ -34,10 +34,7 @@ function loadData() {
         for (var i=0; i <articleList.length; i++) {
           articleStr = articleList[i];
           var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
-
-          //$resElem.append('Victim: <img src="'+ vicPic +'"><img src="' + vicCorpUrl + '">   <a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corporation: ' + articleStr.victim.corporationName + '<br><hr><div class="attackers">');
-
-
+          var shipPic = 'http://imageserver.eveonline.com/Render/' + articleStr.victim.shipTypeID + '_128.png';
           var atkCorp = [];
           for(var atk=0; atk < articleStr.attackers.length; atk++) {
             atkCorp[atk] = {
@@ -58,9 +55,9 @@ function loadData() {
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
           if(articleStr.victim.corporationID == corporation){
-            $resElem.append('<li class="loss"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP + '</div>' + '<hr><div class="attackers">' + formAtk +'</li><hr>');
+            $resElem.append('<li class="loss"><div class="image"><img src="' + shipPic + '"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP + '</div>' + '<hr><div class="attackers">' + formAtk +'</li><hr>');
           } else {
-            $resElem.append('<li class="kill"><div class="image"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP +'</div>'+ '<hr><div class="attackers">' + formAtk + '</li><hr>');
+            $resElem.append('<li class="kill"><div class="image"><img src="' + shipPic + '"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP +'</div>'+ '<hr><div class="attackers">' + formAtk + '</li><hr>');
           }
         }
         $resElem.append('</ul>');
