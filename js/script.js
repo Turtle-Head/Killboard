@@ -53,12 +53,13 @@ function loadData() {
             formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><a href="' + atkCorp[fin].corpKB + '"><img src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '"></a>  ' /*+ atkCorp[fin].corp*/ + '<a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
           }
           formAtk+='</div>';
+          var vicCorpKB = 'http://zkillboard.com/corporation/' + articleStr.victim.corporationID + '/';
           var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
           var formISKP ='<div class="dat"><div class="dat2">ISK Value: <div class="num">'+ value + '</div></div><div class="dat2" width="33%"> Points: ' + articleStr.zkb.points + '</div></div>';
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
           if(articleStr.victim.corporationID == corporation){
-            $resElem.append('<li class="loss"><div class="image"><img src="' + shipPic + '"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP + '</div>' + '<hr><div class="attackers">' + formAtk +'</li><hr>');
+            $resElem.append('<li class="loss"><div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<hr><div class="attackers">' + formAtk +'</li><hr>');
           } else {
             $resElem.append('<li class="kill"><div class="image"><img src="' + shipPic + '"><img src="'+ vicPic +'"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: ' + articleStr.victim.corporationName + formISKP +'</div>'+ '<hr><div class="attackers">' + formAtk + '</li><hr>');
           }
