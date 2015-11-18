@@ -75,7 +75,9 @@ function loadData() {
 }
 
 $('#form-container').submit(loadData);
-
+$( document ).ready(function() {
+    loadData();
+});
 function remove(id) {
     return (elem=document.getElementById(id)).parentNode.removeChild(elem);
 }
