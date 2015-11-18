@@ -26,10 +26,12 @@ li{
 .images{
   box-sizing: content-box;
   flex-flow: row;
+  width: 33%;
 }
 .ids{
   box-sizing: content-box;
   flex-flow: row;
+  width: 33%;
 }
 div{
   padding: 10px;
@@ -76,7 +78,7 @@ html{
   font-size: 1.5em;
 }
 #greeting {
-  font-size: 6em;
+  font-size: 7em;
   font-family: monospace;
 }
 
@@ -97,6 +99,11 @@ html{
 }
 .attackers{
   font-family: monospace;
+  box-sizing: content-box;
+  flex-flow: row;
+  text-align: center;
+}
+.dat{
   box-sizing: content-box;
   flex-flow: row;
 }
