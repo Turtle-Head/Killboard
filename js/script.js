@@ -10,15 +10,10 @@ function loadData() {
     $resElem.text("");
     $vicElem.text("");
 
-    // load streetview
-    //---------------------
-    // YOUR CODE GOES HERE!
-    //---------------------
-    // Background Streetview of address loader
-
     var corporation = "98270563";
     var output = "";
     // End of
+    
     // zkillboard JSON Data pull and parse
     var search = "https://zkillboard.com/api/corporationID/" + corporation + "/" ;
     var wikiRequestTimeout = setTimeout(function(){
@@ -56,11 +51,13 @@ function loadData() {
           for(var fin=0; fin < atkCorp.length; fin++){
             $resElem.append('  <img src="' + atkCorp[fin].corpPic + '">  ' + atkCorp[fin].corp + '  <a href="' + atkCorp[fin].pilotkb + '">' + atkCorp[fin].pilot + '</a><br>');
           }
-          $resElem.append(' Value: '+ articleStr.zkb.totalValue + ' ISK  Points: ' + articleStr.zkb.points + '</li></ul>');
+          var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
+          $resElem.append(' Value: '+ value + ' ISK  Points: ' + articleStr.zkb.points + '</li></ul>');
         }
         clearTimeout(wikiRequestTimeout);
       }
     });
+
     // END OF zkillboard Data Pull
     return false;
 }
