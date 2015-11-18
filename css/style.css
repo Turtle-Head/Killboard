@@ -106,7 +106,7 @@ html{
   font-family: monospace;
   box-sizing: content-box;
   flex-flow: row;
-  text-align: center;
+  text-align: left;
 }
 .dat{
   box-sizing: content-box;
