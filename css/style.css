@@ -129,3 +129,11 @@ html{
   text-shadow: 1px 1px 3px rgba(255,255,255, .5);
   text-align: center;
 }
+.date {
+  box-sizing: content-box;
+  flex-flow: column;
+  width: 100%;
+  color:white;
+  text-align:center;
+  padding: 5%;
+}
