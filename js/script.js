@@ -4,6 +4,8 @@ function loadData() {
     var $vicElem = $('#results-header');
     var $resElem = $('#results-articles');
     var $greeting = $('#greeting');
+    var lost = 0;
+    var won = 0;
 
 
     // clear out old data before new request
@@ -61,11 +63,21 @@ function loadData() {
           var killOutput = '<div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<div class="attackers">' + formAtk +'</li><hr>';
           if(articleStr.victim.corporationID == corporation){
             $resElem.append('<li class="loss">' + killOutput);
+            lost += articleStr.zkb.totalValue;
           } else {
             $resElem.append('<li class="kill">' + killOutput);
+            won += articleStr.zkb.totalValue;
           }
         }
         $resElem.append('</ul>');
+        $('#diff').text('');
+        if((won-lost) > 0){
+          $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en') + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en') + ' ISK</div><div class="kill">' + Number(won-lost).toLocaleString('en') + ' ISK</div>');
+        } else if ((won-lost) < 0){
+          $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en') + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en') + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en') + ' ISK</div>');
+        }
+
+
         clearTimeout(killRequestTimeout);
       }
     });
