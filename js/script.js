@@ -56,7 +56,7 @@ function loadData() {
           }
           formAtk+='</div></div>';
           var vicCorpKB = 'http://zkillboard.com/corporation/' + articleStr.victim.corporationID + '/';
-          var value = Number(articleStr.zkb.totalValue).toLocaleString('en');
+          var value = Number(articleStr.zkb.totalValue).toLocaleString('en', { minimumFractionDigits: 2 });
           var formISKP ='<div class="dat"><div class="dat2">ISK Value: <div class="num">'+ value + '</div></div><div class="dat2"> Points: ' + articleStr.zkb.points + '</div>' + dok + '</div>';
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
@@ -72,9 +72,9 @@ function loadData() {
         $resElem.append('</ul>');
         $('#diff').text('');
         if((won-lost) > 0){
-          $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en') + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en') + ' ISK</div><div class="kill">' + Number(won-lost).toLocaleString('en') + ' ISK</div>');
+          $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="kill">' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
         } else if ((won-lost) < 0){
-          $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en') + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en') + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en') + ' ISK</div>');
+          $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
         }
 
 
