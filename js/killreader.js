@@ -12,14 +12,14 @@ var zkill = function (){
     dataType: "jsonp",
     //jsonp: "callback",
     success: function( response ){
-      // Moves the results to the killList
-      if(self.killList() !== response){
-        self.killList(response);
+      if (self.killArray().length !== response.length){
+        // Clear killArray Values
+        self.killArray([]);
+        // Push the data to killArray
+        for (var x = 0; x < response.length; x++){
+          self.killArray().push(new kill(response[x]));
+        }
       }
-      else {
-        alert('No new kills');
-      }
-      console.log(self.killList());
       clearTimeout(killRequestTimeout);
     }
   });
@@ -83,14 +83,10 @@ var Kill = function(data) {
 
 var ViewModel = function() {
   var self = this;
-  self.killList = ko.observable();
-  // static variables for getting the data
   self.corporation = ko.observable('98270563');
-  zkill();
+  // Pull the data from zkillboard
   self.killArray = ko.observable([]);
-  for (var x = 0; x < self.killList().length; x++){
-    self.killArray().push(new kill(killList()[x]));
-  }
+  zkill();
   self.won = ko.computed(function(){
     var isk;
     for(var z = 0; z < self.killArray().length; z++) {
