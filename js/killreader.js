@@ -87,6 +87,7 @@ var ViewModel = function() {
   // Pull the data from zkillboard
   self.killArray = ko.observable([]);
   zkill();
+  $('submit-btn').onClick(zkill());
   self.won = ko.computed(function(){
     var isk;
     for(var z = 0; z < self.killArray().length; z++) {
