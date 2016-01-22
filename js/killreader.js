@@ -1,9 +1,21 @@
-var zkill = function (){
+var zkill = function (id, porc){
   var d = new Date();
   var y = d.getFullYear();
   var m  = d.getMonth()+1;
+  var search = "https://zkillboard.com/api/";
   // zkillboard JSON Data pull and parse
-  var search = "https://zkillboard.com/api/corporationID/" + self.corporation() + "/year/" + y + "/month/" + m + "/";
+  // Checks inputs for id and porc
+
+  if(data && (porc === p)){
+    id = data;
+    search += "characterID/" + id;
+  } else if(id && (porc === c)){
+    id = data;
+    search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
+  } else if(!id){
+    id = self.corporation();
+    search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
+  }
   var killRequestTimeout = setTimeout(function(){
     alert("Request Timeout: Failed to get kill data");
   }, 8000);
@@ -86,7 +98,7 @@ var ViewModel = function() {
   self.corporation = ko.observable('98270563');
   // Pull the data from zkillboard
   self.killArray = ko.observable([]);
-  zkill();
+  zkill(self.corporation, c);
   $('submit-btn').onClick(zkill());
   self.won = ko.computed(function(){
     var isk;
