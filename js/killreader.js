@@ -28,26 +28,26 @@ var zkill = function (){
 
 var Kill = function(data) {
   var km = this;
-  var articleStr = data;
   km.kill = ko.observable(false);
-  km.corp = ko.observable(articleStr.victim.corporationID);
-  km.url = ko.observable('http://zkillboard.com/kill/' + articleStr.killID + '/');
-  km.shipPic = ko.observable('http://imageserver.eveonline.com/Render/' + articleStr.victim.shipTypeID + '_128.png');
+  km.corp = ko.observable(data.victim.corporationID);
+  km.victim = ko.observable(data.victim.characterName);
+  km.url = ko.observable('http://zkillboard.com/kill/' + data.killID + '/');
+  km.shipPic = ko.observable('http://imageserver.eveonline.com/Render/' + data.victim.shipTypeID + '_128.png');
   km.atkCorp = ko.observableArray([]);
-  for(var atk=0; atk < articleStr.attackers.length; atk++) {
+  for(var atk=0; atk < data.attackers.length; atk++) {
     km.atkCorp().push({
-      "pilotkb" : 'https://zkillboard.com/character/' + articleStr.attackers[atk].characterID + '/',
-      "corpPic" :  'http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_32.png',
-      "corp" : articleStr.attackers[atk].corporationName,
-      "pilot": articleStr.attackers[atk].characterName,
-      "pilotP": 'http://imageserver.eveonline.com/Character/'+ articleStr.attackers[atk].characterID +'_32.jpg',
-      "shipPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].shipTypeID + '_32.png',
-      "wepPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].weaponTypeID + '_32.png',
-      "corpKB": 'http://zkillboard.com/corporation/' + articleStr.attackers[atk].corporationID + '/'
+      "pilotkb" : 'https://zkillboard.com/character/' + data.attackers[atk].characterID + '/',
+      "corpPic" :  'http://imageserver.eveonline.com/Corporation/' + data.attackers[atk].corporationID + '_32.png',
+      "corp" : data.attackers[atk].corporationName,
+      "pilot": data.attackers[atk].characterName,
+      "pilotP": 'http://imageserver.eveonline.com/Character/'+ data.attackers[atk].characterID +'_32.jpg',
+      "shipPic": 'http://imageserver.eveonline.com/Type/' + data.attackers[atk].shipTypeID + '_32.png',
+      "wepPic": 'http://imageserver.eveonline.com/Type/' + data.attackers[atk].weaponTypeID + '_32.png',
+      "corpKB": 'http://zkillboard.com/corporation/' + data.attackers[atk].corporationID + '/'
     });
   }
-  km.involved = ko.observable(articleStr.attackers.length);
-  km.time = ko.observable(articleStr.killTime);
+  km.involved = ko.observable(data.attackers.length);
+  km.time = ko.observable(data.killTime);
   // TODO: Converted to binds
   // ------------------------
   // km.formAtk = ko.observable('<div class="dat" id="inv">Involved: '+ (articleStr.attackers.length) + '<div id="atta">');
@@ -55,16 +55,16 @@ var Kill = function(data) {
   //  formAtk(formAtk() + '<img src="'+ km.atkCorp()[fin].shipPic + '"><img src="'+ km.atkCorp()[fin].wepPic + '"><a href="' + km.atkCorp()[fin].corpKB + '"><img src="' + km.atkCorp()[fin].corpPic + '" alt="' + km.atkCorp()[fin].corp + '"></a>  ');
   // }
   // formAtk(formAtk() + '</div></div>');
-  km.vicCorpKB = ko.observable('http://zkillboard.com/corporation/' + articleStr.victim.corporationID + '/');
-  km.isk = ko.observable(Number(articleStr.zkb.totalValue).toLocaleString('en', { minimumFractionDigits: 2 }));
-  km.kval = ko.observable(articleStr.zkb.totalValue);
-  km.points = ko.observable(articleStr.zkb.points);
-  km.vicCorpUrl = ko.observable('http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_32.png');
-  km.vicPic = ko.observable('http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg');
+  km.vicCorpKB = ko.observable('http://zkillboard.com/corporation/' + data.victim.corporationID + '/');
+  km.isk = ko.observable(Number(data.zkb.totalValue).toLocaleString('en', { minimumFractionDigits: 2 }));
+  km.kval = ko.observable(data.zkb.totalValue);
+  km.points = ko.observable(data.zkb.points);
+  km.vicCorpUrl = ko.observable('http://imageserver.eveonline.com/Corporation/' + data.victim.corporationID + '_32.png');
+  km.vicPic = ko.observable('http://imageserver.eveonline.com/Character/' + data.victim.characterID + '_128.jpg');
   // TODO: Convert to binds
   // ----------------------
   // var killOutput = '<div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<div class="attackers">' + formAtk +'</li><hr>';
-  if(articleStr.victim.corporationID === self.corporation()){
+  if(data.victim.corporationID === self.corporation()){
     km.kill(false);
   } else {
     km.kill(true);
