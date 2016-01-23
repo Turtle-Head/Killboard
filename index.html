@@ -28,10 +28,10 @@
           </tr>
         </thead>
         <tbody data-bind="forEach: killArray">
-          <tr class="kill" data-bind="if: kill, data: killArray">
-            <td class="" data-bind=""></td>
+          <tr class="kill" data-bind="if: kill,">
+            <td class="" data-bind="text: victim"></td><td data-bind=""><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
           </tr>
-          <tr class="loss" data-bind="ifnot: kill, data: killArray">
+          <tr class="loss" data-bind="ifnot: kill">
             <td class="" data-bind="text: victim"></td><td data-bind=""><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
           </tr>
         </tbody>
