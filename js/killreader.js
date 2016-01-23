@@ -6,11 +6,9 @@ var zkill = function (id, porc){
   // zkillboard JSON Data pull and parse
   // Checks inputs for id and porc
 
-  if(data && (porc === p)){
-    id = data;
+  if(id && (porc === 'p')){
     search += "characterID/" + id;
-  } else if(id && (porc === c)){
-    id = data;
+  } else if(id && (porc === 'c')){
     search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
   } else if(!id){
     id = self.corporation();
@@ -97,8 +95,8 @@ var ViewModel = function() {
   var self = this;
   self.corporation = ko.observable('98270563');
   // Pull the data from zkillboard
-  self.killArray = ko.observable([]);
-  zkill(self.corporation, c);
+  self.killArray = ko.observableArray([]);
+  zkill(self.corporation, 'c');
   $('submit-btn').onClick(zkill());
   self.won = ko.computed(function(){
     var isk;

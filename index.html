@@ -27,9 +27,9 @@
             <th class=""></th>
           </tr>
         </thead>
-        <tbody data-bind="forEach: killArray">
-          <tr class="kill" data-bind="if: kill,">
-            <td class="" data-bind="text: victim"></td><td data-bind=""><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
+        <tbody data-bind="foreach: killArray">
+          <tr>
+            <td class="" data-bind="text: $parent.victim.characterName"></td><td><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
           </tr>
           <tr class="loss" data-bind="ifnot: kill">
             <td class="" data-bind="text: victim"></td><td data-bind=""><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
@@ -42,7 +42,7 @@
 
     <script src="js/libs/jquery.min.js"></script>
     <script src="js/libs/knockout-3.4.0.js"></script>
-    <script src="js/script.min.js"></script>
+    <script src="js/killreader.js"></script>
     <img class="bgimg" src="http://imageserver.eveonline.com/Corporation/98270563_128.png">
     <link href='https://fonts.googleapis.com/css?family=Shanti' rel='stylesheet' type='text/css'>
 </body>
