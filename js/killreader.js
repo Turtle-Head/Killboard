@@ -122,3 +122,4 @@ var ViewModel = function() {
     return (self.won()-self.lost());
   }, this);
 };
+ko.applybindings(new ViewModel());
