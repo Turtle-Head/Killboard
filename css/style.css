@@ -3,12 +3,13 @@
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+  font-family: "Shanti", monospace;
 }
 body {
   background-color: black;
   color: white;
   text-align: center;
-  font-family: monospace;
+  font-family: "Shanti", monospace;
   font-size: 1em;
 }
 .results-list{
@@ -18,11 +19,31 @@ a{
   color: red;
   text-decoration: none;
 }
-ul{
+ul,
+li{
   list-style-type: none;
-  /*border: solid 2px red;
-  border-radius: 70px 40px;*/
   font-size: 2em;
+  display: flex;
+  flex-flow: row;
+  opacity: 0.85;
+}
+.images{
+  box-sizing: content-box;
+  flex-flow: row;
+  width: 33%;
+}
+.ids{
+  box-sizing: content-box;
+  flex-flow: row;
+  width: 33%;
+}
+.pl-report{
+  box-sizing: content-box;
+  flex-flow: row;
+  width: 33%;
+}
+div{
+  padding: 10px;
 }
 html{
   font-size:100%;
@@ -49,12 +70,12 @@ h4{
   -webkit-border-radius: 10px;
   border-radius: 10px;
   width: 300px;
-  height: 50px;
+  height: 30px;
   -webkit-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
   -moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
   box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
-  font-size: 2em;
-  font-family: monospace;
+  font-size: 1em;
+  font-family: "Shanti", monospace;
 }
 #submit-btn:hover, #submit-btn:focus{
   /*reduce the size of the shadow*/
@@ -73,21 +94,23 @@ h4{
 .numk{
   color: green;
   font-size: 1.5em;
-}
-.numl{
-  color: red;
-  font-size: 1.5em;
+  box-sizing: content-box;
+  flex-flow: row;
+  width: 100%;
+  text-align:center;
+  padding: 0;
 }
 #greeting {
-  font-size: 6em;
-  font-family: monospace;
+  font-size: 7em;
+  font-family: "Shanti", monospace;
 }
 
 .greeting {
     color:white;
-    text-shadow: 1px 1px 3px rgba(255,255,255, .5);
+    text-shadow: 1px 2px 3px rgba(255,255,255, .5);
     text-align: center;
 }
+<<<<<<< HEAD
 .losses{
   background-color: rgba(231, 13, 13,0.5);
 }
@@ -113,18 +136,49 @@ h4{
 .kills-list {
     margin: 0;
     padding: 0;
+=======
+.loss{
+  background-color: rgba(233, 57, 60,0.25);
+  font-family: monospace;
+  font-size: 1.5em;
 }
-
+.kill{
+  background-color: rgba(85, 244, 61,0.25);
+  font-family: monospace;
+  font-size: 1.5em;
+}
+.attackers{
+  font-family: monospace;
+  box-sizing: content-box;
+  flex-flow: row;
+  text-align: left;
+}
+.dat{
+  box-sizing: content-box;
+  flex-flow: row;
+}
+.dat2{
+  box-sizing: content-box;
+  flex-flow: row;
+  width: 100%;
+  padding: 0;
+>>>>>>> refs/remotes/origin/master
+}
 .victim {
     list-style-type: none;
     padding:10px;
     border-top: 1px solid #CCC;
 }
-.article:first-child {
-    border-top:none;
-}
 .credits {
   color:white;
   text-shadow: 1px 1px 3px rgba(255,255,255, .5);
   text-align: center;
+}
+.date {
+  box-sizing: content-box;
+  flex-flow: column;
+  width: 100%;
+  color:white;
+  text-align:center;
+  padding: 5%;
 }

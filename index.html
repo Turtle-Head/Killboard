@@ -2,35 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" src="http://normalize-css.googlecode.com/svn/trunk/normalize.css">
     <title>Unknown Crusade Killboard</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
     <hr>
 
-    <h2 id="greeting" class="greeting"><img src="http://imageserver.eveonline.com/Corporation/98270563_128.png"><br>Unknown Crusade</h2>
+    <h2 id="greeting" class="greeting"><br>Unknown Crusade</h2>
     <hr>
     <form id="form-container" class="form-container">
         <button id="submit-btn">Refresh Killboard</button>
     </form>
 
-    <section class="results">
-      <div class="kills-container">
-        <h3 id="kills-header">Kills</h3>
-        <div>
-        <ul id="kills-articles"></ul>
-      </div>
-      </div>
 
-      <div class="losses-container">
-        <h3 id="losses-header">Losses</h3>
-        <ul id="losses-articles"></ul>
-      </div>
+    <div>
+      <div id="diff" align-items="center" class="pl-report"></div>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr width="100%">
+            <th class=""></th>
+          </tr>
+        </thead>
+        <tbody data-bind="forEach: killArray">
+          <tr class="kill" data-bind="if: kill,">
+            <td class="" data-bind="text: victim"></td><td data-bind=""><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
+          </tr>
+          <tr class="loss" data-bind="ifnot: kill">
+            <td class="" data-bind="text: victim"></td><td data-bind=""><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="credits">EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf. CCP hf. has granted permission to turtle-head to use EVE Online and all associated logos and designs for promotional and information purposes on its website but does not endorse, and is not in any way affiliated with, turtle-head. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.</div>
 
     <script src="js/libs/jquery.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/libs/knockout-3.4.0.js"></script>
+    <script src="js/script.min.js"></script>
+    <img class="bgimg" src="http://imageserver.eveonline.com/Corporation/98270563_128.png">
+    <link href='https://fonts.googleapis.com/css?family=Shanti' rel='stylesheet' type='text/css'>
 </body>
 </html>
