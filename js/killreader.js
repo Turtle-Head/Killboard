@@ -6,15 +6,12 @@ var zkill = function (id, porc){
   // zkillboard JSON Data pull and parse
   // Checks inputs for id and porc
 
-  if(data && (porc === p)){
-    id = data;
+  if(id && (porc === 'p')){
     search += "characterID/" + id;
-  } else if(id && (porc === c)){
-    id = data;
+  } else if(id && (porc === 'c')){
     search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
-  } else if(!id){
-    id = self.corporation();
-    search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
+  } else {
+    alert('Error parsing ID!');
   }
   var killRequestTimeout = setTimeout(function(){
     alert("Request Timeout: Failed to get kill data");
@@ -23,22 +20,24 @@ var zkill = function (id, porc){
     url: search,
     dataType: "jsonp",
     //jsonp: "callback",
-    success: function( response ){
-      if (self.killArray().length !== response.length){
-        // Clear killArray Values
-        self.killArray([]);
-        // Push the data to killArray
-        for (var x = 0; x < response.length; x++){
-          self.killArray().push(new kill(response[x]));
-        }
+    success: function( response ) {
+      // Send the results out
+      console.log(response);
+      for(var x = 0; x < response.length; x++) {
+        killArray().push(response[x]);
+        displayKills().push(new Kill(response[x], id));
       }
+      // Clear the timeout
+      console.log(killArray());
+      console.log(displayKills());
       clearTimeout(killRequestTimeout);
     }
   });
   // END OF zkillboard Data Pull
 };
 
-var Kill = function(data) {
+var Kill = function(data, id) {
+  console.log(data);
   var km = this;
   km.kill = ko.observable(false);
   km.corp = ko.observable(data.victim.corporationID);
@@ -76,7 +75,7 @@ var Kill = function(data) {
   // TODO: Convert to binds
   // ----------------------
   // var killOutput = '<div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<div class="attackers">' + formAtk +'</li><hr>';
-  if(data.victim.corporationID === self.corporation()){
+  if((data.victim.corporationID === id) || (data.victim.characterID === id)) {
     km.kill(false);
   } else {
     km.kill(true);
@@ -92,28 +91,35 @@ var Kill = function(data) {
   //   $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
   // }
 };
+// TODO killArray should only be used to tool the displayKills array and should be removed when dev is complete
+var killArray = ko.observableArray([]);
+// TODO
+// This array should contain all relevant links to the CREST server for data import on images
+// It should also contain all data relevant to the kill it represents per index
+var displayKills = ko.observableArray([]);
 
 var ViewModel = function() {
   var self = this;
   self.corporation = ko.observable('98270563');
   // Pull the data from zkillboard
-  self.killArray = ko.observable([]);
-  zkill(self.corporation, c);
-  $('submit-btn').onClick(zkill());
+
+  zkill(self.corporation(), 'c');
+  //$('submit-btn').onClick(zkill());
+
   self.won = ko.computed(function(){
     var isk;
-    for(var z = 0; z < self.killArray().length; z++) {
-      if(self.killArray()[z].kill()) {
-        isk += self.killArray()[z].kval();
+    for(var z = 0; z < displayKills().length; z++) {
+      if(displayKills()[z].kill()) {
+        isk += displayKills()[z].kval();
       }
     }
     return isk;
   }, this);
   self.lost = ko.computed(function() {
     var isk;
-    for(var z = 0; z < self.killArray().length; z++) {
-      if(!self.killArray()[z].kill()) {
-        isk += self.killArray()[z].kval();
+    for(var z = 0; z < displayKills().length; z++) {
+      if(!displayKills()[z].kill()) {
+        isk += displayKills()[z].kval();
       }
     }
     return isk;
@@ -121,5 +127,6 @@ var ViewModel = function() {
   self.balance = ko.computed(function(){
     return (self.won()-self.lost());
   }, this);
+
 };
-ko.applybindings(new ViewModel());
+ko.applyBindings(new ViewModel());
