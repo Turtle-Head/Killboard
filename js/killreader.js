@@ -91,8 +91,13 @@ var Kill = function(data, id) {
   //   $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
   // }
 };
+// TODO killArray should only be used to tool the displayKills array and should be removed when dev is complete
 var killArray = ko.observableArray([]);
+// TODO
+// This array should contain all relevant links to the CREST server for data import on images
+// It should also contain all data relevant to the kill it represents per index
 var displayKills = ko.observableArray([]);
+
 var ViewModel = function() {
   var self = this;
   self.corporation = ko.observable('98270563');
@@ -100,8 +105,6 @@ var ViewModel = function() {
 
   zkill(self.corporation(), 'c');
   //$('submit-btn').onClick(zkill());
-
-
 
   self.won = ko.computed(function(){
     var isk;
