@@ -59,10 +59,8 @@ function loadData(id, data) {
           var dok = '<div class="num">' + articleStr.killTime + '</div>';
           var formAtk = '<div class="dat" id="inv">Involved: '+ (articleStr.attackers.length) + '<div id="atta">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><a href="' + atkCorp[fin].corpKB + '"><img src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '"></a>  ' /*+ atkCorp[fin].corp*/ + '<a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><p id=' + atkCorp[fin].id + '> *Load Kills*</p><br>';
-            $('#' + atkCorp[fin].id).click(function(){
-              loadData(this.id, false);
-            });
+            formAtk+='<button class="loader" id=' + atkCorp[fin].id + '>Load Kills</button><img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><a href="' + atkCorp[fin].corpKB + '"><img src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '"></a>  ' /*+ atkCorp[fin].corp*/ + '<a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
+
           }
           formAtk+='</div></div>';
           var vicCorpKB = 'http://zkillboard.com/corporation/' + articleStr.victim.corporationID + '/';
@@ -70,17 +68,14 @@ function loadData(id, data) {
           var formISKP ='<div class="dat"><div class="dat2">ISK Value: <div class="num">'+ value + '</div></div><div class="dat2"> Points: ' + articleStr.zkb.points + '</div>' + dok + '</div>';
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
-          var killOutput = '<div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<div class="attackers">' + formAtk +'</li><hr>';
+          var killOutput = '<button class="loader" id=' + articleStr.victim.characterID + '">Load Kills</button><div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<div class="attackers">' + formAtk +'</li><hr>';
           if((articleStr.victim.corporationID == id) || (articleStr.victim.characterID == id)){
-            $resElem.append('<li id=' + articleStr.victim.characterID + ' class="loss">' + killOutput);
+            $resElem.append('<li class="loss">' + killOutput);
             lost += articleStr.zkb.totalValue;
           } else {
-            $resElem.append('<li id=' + articleStr.victim.characterID + ' class="kill">' + killOutput);
+            $resElem.append('<li class="kill">' + killOutput);
             won += articleStr.zkb.totalValue;
           }
-          $('#' + articleStr.victim.characterID).click(function(){
-            loadData(this.id, false);
-          });
         }
         $resElem.append('</ul>');
         $('#diff').text('');
@@ -99,6 +94,7 @@ function loadData(id, data) {
     return false;
 }
 
+$(document).on('click','.loader', function(){loadData(this.id, false);});
 $('#form-container').submit(loadData(UKCR_ID, true));
 $( document ).ready(function() {
     loadData(UKCR_ID, true);
