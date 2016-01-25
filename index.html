@@ -27,12 +27,23 @@
             <th class=""></th>
           </tr>
         </thead>
-        <tbody data-bind="foreach: displayKills">
-          <tr class="kill" data-bind="if: kill">
-            <td class="" data-bind="text: victim"></td><td><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
+        <tbody data-bind="foreach: displayKills()">
+          <tr>
+            <td data-bind="text: victim"></td>
+            <td>
+              <img src="" data-bind="attr: {src: shipPic}" width="50px">
+            </td>
+            <td>
+              <ul data-bind="forEach: atkCorp">
+                <li data-bind="text: pilot"></li>
+              </ul>
+            </td>
           </tr>
-          <tr class="loss" data-bind="ifnot: kill">
-            <td class="" data-bind="text: victim"></td><td data-bind=""><img src="" data-bind="attr: {src: shipPic}" width="50px"></td><td><ul data-bind="forEach: atkCorp"><li data-bind="text: pilot"></li></ul></td>
+        </tbody>
+
+        <tbody data-bind="foreach: killArray">
+          <tr data-bind="">
+            <td data-bind="text: victim.characterName"></td>
           </tr>
         </tbody>
       </table>
