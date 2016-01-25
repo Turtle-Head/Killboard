@@ -10,8 +10,7 @@ This killboard is for the online game Eve Online.
 
 ## Framework
 
--   Currently implementing Knockout.js
--   jQuery for ajax api calls
+-   jQuery
 
 ## General Use
 
@@ -20,11 +19,3 @@ This killboard is for the online game Eve Online.
 -   Alternatively load index.html in your favorite browser if you intend a
 local deployment
 
-### Functions
-
-#### zkill
-
--   requires 2 arguments, id and p or c
--   p denotes pilot killboard import
--   c denotes corporation killboard import
--   id is the zkillboard id value and is numerical
