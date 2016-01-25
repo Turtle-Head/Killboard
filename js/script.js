@@ -1,4 +1,5 @@
-function loadData() {
+var UKCR_ID = "98270563";
+function loadData(id, data) {
 
     var $body = $('body');
     var $vicElem = $('#results-header');
@@ -12,14 +13,19 @@ function loadData() {
     $resElem.text("");
     $vicElem.text("");
 
-    var corporation = "98270563";
+
     var output = "";
     // End of
     var d = new Date();
     var y = d.getFullYear();
     var m  = d.getMonth()+1;
     // zkillboard JSON Data pull and parse
-    var search = "https://zkillboard.com/api/corporationID/" + corporation + "/year/" + y + "/month/" + m + "/";
+    var search = "https://zkillboard.com/api/";
+    if (data){
+      search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
+    } else if (!data){
+      search += "characterID/" + id + "/year/" + y + "/month/" + m + "/";
+    }
     var killRequestTimeout = setTimeout(function(){
       $resElem.text("Failed to get kill data");
     }, 8000);
@@ -46,13 +52,17 @@ function loadData() {
               "pilotP": 'http://imageserver.eveonline.com/Character/'+ articleStr.attackers[atk].characterID +'_32.jpg',
               "shipPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].shipTypeID + '_32.png',
               "wepPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].weaponTypeID + '_32.png',
-              "corpKB": 'http://zkillboard.com/corporation/' + articleStr.attackers[atk].corporationID + '/'
+              "corpKB": 'http://zkillboard.com/corporation/' + articleStr.attackers[atk].corporationID + '/',
+              "id": articleStr.attackers[atk].characterID
             };
           }
           var dok = '<div class="num">' + articleStr.killTime + '</div>';
           var formAtk = '<div class="dat" id="inv">Involved: '+ (articleStr.attackers.length) + '<div id="atta">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><a href="' + atkCorp[fin].corpKB + '"><img src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '"></a>  ' /*+ atkCorp[fin].corp*/ + '<a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
+            formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><a href="' + atkCorp[fin].corpKB + '"><img src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '"></a>  ' /*+ atkCorp[fin].corp*/ + '<a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><p id=' + atkCorp[fin].id + '> *Load Kills*</p><br>';
+            $('#' + atkCorp[fin].id).click(function(){
+              loadData(this.id, false);
+            });
           }
           formAtk+='</div></div>';
           var vicCorpKB = 'http://zkillboard.com/corporation/' + articleStr.victim.corporationID + '/';
@@ -61,13 +71,16 @@ function loadData() {
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
           var killOutput = '<div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<div class="attackers">' + formAtk +'</li><hr>';
-          if(articleStr.victim.corporationID == corporation){
-            $resElem.append('<li class="loss">' + killOutput);
+          if((articleStr.victim.corporationID == id) || (articleStr.victim.characterID == id)){
+            $resElem.append('<li id=' + articleStr.victim.characterID + ' class="loss">' + killOutput);
             lost += articleStr.zkb.totalValue;
           } else {
-            $resElem.append('<li class="kill">' + killOutput);
+            $resElem.append('<li id=' + articleStr.victim.characterID + ' class="kill">' + killOutput);
             won += articleStr.zkb.totalValue;
           }
+          $('#' + articleStr.victim.characterID).click(function(){
+            loadData(this.id, false);
+          });
         }
         $resElem.append('</ul>');
         $('#diff').text('');
@@ -86,7 +99,7 @@ function loadData() {
     return false;
 }
 
-$('#form-container').submit(loadData);
+$('#form-container').submit(loadData(UKCR_ID, true));
 $( document ).ready(function() {
-    loadData();
+    loadData(UKCR_ID, true);
 });
