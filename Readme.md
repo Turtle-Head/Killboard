@@ -18,4 +18,3 @@ This killboard is for the online game Eve Online.
 
 -   Alternatively load index.html in your favorite browser if you intend a
 local deployment
-
