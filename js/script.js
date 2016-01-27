@@ -35,7 +35,7 @@ function loadData(id, data) {
       //jsonp: "callback",
       success: function( response ){
         // Writes kill articles out to page
-        $resElem.append('<ul>');
+        $resElem.append('<table><thead><tr width="100%"><th>' + m + '/' + y + '</th></tr></thead><tbody>');
         var articleList = response;
         console.log(articleList);
         for (var i=0; i <articleList.length; i++) {
@@ -68,16 +68,16 @@ function loadData(id, data) {
           var formISKP ='<div class="dat"><div class="dat2">ISK Value: <div class="num">'+ value + '</div></div><div class="dat2"> Points: ' + articleStr.zkb.points + '</div>' + dok + '</div>';
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
-          var killOutput = '<button class="loader" id=' + articleStr.victim.characterID + '">Load Kills</button><div class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></div><div class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</div>' + '<div class="attackers">' + formAtk +'</li><hr>';
+          var killOutput = '<td><button class="loader" id=' + articleStr.victim.characterID + '">Load Kills</button></td><td class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></td><td class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</td><td class="attackers">' + formAtk +'</li></td><hr>';
           if((articleStr.victim.corporationID == id) || (articleStr.victim.characterID == id)){
-            $resElem.append('<li class="loss">' + killOutput);
+            $resElem.append('<tr class="loss">' + killOutput + '</tr>');
             lost += articleStr.zkb.totalValue;
           } else {
-            $resElem.append('<li class="kill">' + killOutput);
+            $resElem.append('<tr class="kill">' + killOutput + '</tr>');
             won += articleStr.zkb.totalValue;
           }
         }
-        $resElem.append('</ul>');
+        $resElem.append('</tbody></table>');
         $('#diff').text('');
         if((won-lost) > 0){
           $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="kill">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
