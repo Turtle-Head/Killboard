@@ -36,7 +36,7 @@ function loadData(id, data) {
       success: function( response ){
         // Writes kill articles out to page
         console.log(id);
-        $resElem.append('<table><thead><tr width="100%"><th>' + m + '/' + y + '</th></tr></thead><tbody>');
+        $('#month').append('<th>' + m + '/' + y + '</th>');
         var articleList = response;
         console.log(articleList);
         for (var i=0; i <articleList.length; i++) {
@@ -78,7 +78,6 @@ function loadData(id, data) {
             lost += articleStr.zkb.totalValue;
           }
         }
-        $resElem.append('</tbody></table>');
         $('#diff').text('');
         if((won-lost) > 0){
           $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="kill">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
