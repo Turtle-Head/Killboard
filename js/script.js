@@ -35,6 +35,7 @@ function loadData(id, data) {
       //jsonp: "callback",
       success: function( response ){
         // Writes kill articles out to page
+        console.log(id);
         $resElem.append('<table><thead><tr width="100%"><th>' + m + '/' + y + '</th></tr></thead><tbody>');
         var articleList = response;
         console.log(articleList);
@@ -69,12 +70,12 @@ function loadData(id, data) {
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
           var killOutput = '<td><button class="loader" id=' + articleStr.victim.characterID + '">Load Kills</button></td><td class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></td><td class="ids"><a href="' + url + '">' + articleStr.victim.characterName + '</a><br> Corp: <a href="' + vicCorpKB + '">' + articleStr.victim.corporationName + '</a>' + formISKP + '</td><td class="attackers">' + formAtk +'</li></td><hr>';
-          if((articleStr.victim.corporationID == id) || (articleStr.victim.characterID == id)){
-            $resElem.append('<tr class="loss">' + killOutput + '</tr>');
-            lost += articleStr.zkb.totalValue;
-          } else {
+          if((Number(articleStr.victim.corporationID) !== Number(id)) && (Number(articleStr.victim.characterID) !== Number(id))) {
             $resElem.append('<tr class="kill">' + killOutput + '</tr>');
             won += articleStr.zkb.totalValue;
+          } else {
+            $resElem.append('<tr class="loss">' + killOutput + '</tr>');
+            lost += articleStr.zkb.totalValue;
           }
         }
         $resElem.append('</tbody></table>');
@@ -82,7 +83,7 @@ function loadData(id, data) {
         if((won-lost) > 0){
           $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="kill">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
         } else if ((won-lost) < 0){
-          $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
+          $('#diff').append('<div class="loss">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
         }
 
 
@@ -94,8 +95,11 @@ function loadData(id, data) {
     return false;
 }
 
-$(document).on('click','.loader', function(){loadData(this.id, false);});
-$('#form-container').submit(loadData(UKCR_ID, true));
+$(document).on('click','.loader', function(){
+  var id = this.id;
+  loadData(id, false);
+});
+$('#form-container').click(function(){loadData(UKCR_ID, true);});
 $( document ).ready(function() {
     loadData(UKCR_ID, true);
 });
