@@ -147,3 +147,9 @@ html{
   color: white;
   background-color: #001133;
 }
+td {
+  vertical-align: top;
+  padding: 5px;
+  text align: center;
+  border: 0;
+}
