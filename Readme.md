@@ -12,6 +12,11 @@ This killboard is for the online game Eve Online.
 
 -   jQuery
 
+## APIs
+
+-zKillboard
+-CREST
+
 ## General Use
 
 -   Load <http://turtle-head.github.io/Killboard/> in your favorite browser
