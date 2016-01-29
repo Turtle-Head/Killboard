@@ -107,10 +107,6 @@ function loadData(id, data) {
     return false;
 }
 
-$(document).on('click','.loader', function(){
-  var id = this.id;
-  loadData(id, false);
-});
 $(document).on('click','.pload', function(){
   var id = this.id;
   loadData(id, false);
