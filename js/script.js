@@ -1,34 +1,33 @@
 var UKCR_ID = "98270563";
 function loadData(id, data) {
-
+    // Define the vars for easy use
     var $body = $('body');
     var $vicElem = $('#results-header');
     var $resElem = $('#results-articles');
     var $greeting = $('#greeting');
     var lost = 0;
     var won = 0;
-
-
-    // clear out old data before new request
+    // Clear out old data before new request
     $resElem.text("");
     $vicElem.text("");
-
-
     var output = "";
-    // End of
+    // Get the date
     var d = new Date();
     var y = d.getFullYear();
     var m  = d.getMonth()+1;
     // zkillboard JSON Data pull and parse
     var search = "https://zkillboard.com/api/";
+    // Set search to corporation or character API
     if (data){
       search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
     } else if (!data){
       search += "characterID/" + id + "/year/" + y + "/month/" + m + "/";
     }
+    // Error checking with a timeout
     var killRequestTimeout = setTimeout(function(){
       $resElem.text("Failed to get kill data");
     }, 8000);
+    // Import the data
     $.ajax({
       url: search,
       dataType: "jsonp",
@@ -43,6 +42,7 @@ function loadData(id, data) {
           articleStr = articleList[i];
           var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
           var shipPic = 'http://imageserver.eveonline.com/Render/' + articleStr.victim.shipTypeID + '_128.png';
+          // Sets up the killers data for easy use
           var atkCorp = [];
           for(var atk=0; atk < articleStr.attackers.length; atk++) {
             atkCorp[atk] = {
@@ -57,22 +57,24 @@ function loadData(id, data) {
               "id": articleStr.attackers[atk].characterID,
               "cid": articleStr.attackers[atk].corporationID
             };
+            // Finding out who the killboard is about
             if (Number(id) === Number(articleStr.attackers[atk].characterID)) {
               $('#killBoard').text(articleStr.attackers[atk].characterName);
             } else if (Number(id) === Number(articleStr.attackers[atk].corporationID)) {
               $('#killBoard').text(articleStr.attackers[atk].corporationName);
             }
           }
+          // Finding out who the killboard is about
           if (Number(id) === Number(articleStr.victim.characterID)) {
             $('#killBoard').text(articleStr.victim.characterName);
           } else if (Number(id) === Number(articleStr.victim.corporationID)) {
             $('#killBoard').text(articleStr.victim.corporationName);
           }
+          // Sets up the display values
           var dok = '<div class="num">' + articleStr.killTime + '</div>';
           var formAtk = '<div class="dat" id="inv">Involved: '+ (articleStr.attackers.length) + '<div id="atta">';
           for(var fin=0; fin < atkCorp.length; fin++){
             formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><img class="cload" id=' + atkCorp[fin].cid + ' src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '">  <a href="#" class="pload" id=' + atkCorp[fin].id + '><img src="' + atkCorp[fin].pilotP + '">  ' + atkCorp[fin].pilot + '</a><br>';
-
           }
           formAtk+='</div></div>';
           var vicCorpKB = 'http://zkillboard.com/corporation/' + articleStr.victim.corporationID + '/';
@@ -80,36 +82,32 @@ function loadData(id, data) {
           var formISKP ='<div class="dat"><div class="dat2">ISK Value: <div class="num">'+ value + '</div></div><div class="dat2"> Points: ' + articleStr.zkb.points + '</div>' + dok + '</div>';
           var vicCorpUrl = 'http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png';
           var vicPic = 'http://imageserver.eveonline.com/Character/' + articleStr.victim.characterID + '_128.jpg';
-          // <td><button class="loader" id=' + articleStr.victim.characterID + '">Load Kills</button></td>
-          var killOutput = '<td class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></td><td class="ids"><a href="#" class="pload" id=' + articleStr.victim.characterID + '>' + articleStr.victim.characterName + '</a><br> Corp: <a href="#" class="cload" id=' + articleStr.victim.corporationID + '>' + articleStr.victim.corporationName + '</a>' + formISKP + '</td><td class="attackers">' + formAtk +'</li></td></tr>';
+          var killOutput = '<td class="image"><a href="' + url + '"><img src="' + shipPic + '"><img src="'+ vicPic +'"></a><a href="' + vicCorpKB + '"><img src="' + vicCorpUrl + '"></td>';
+          var attkOut = '<td class="ids"><a href="#" class="pload" id=' + articleStr.victim.characterID + '>' + articleStr.victim.characterName + '</a><br> Corp: <a href="#" class="cload" id=' + articleStr.victim.corporationID + '>' + articleStr.victim.corporationName + '</a>' + formISKP + '</td><td class="attackers">' + formAtk + '</td></tr>';
+          // Shows the kill as a kill or loss
           if((Number(articleStr.victim.corporationID) !== Number(id)) && (Number(articleStr.victim.characterID) !== Number(id))) {
-            $resElem.append('<tr class="kill">' + killOutput);
+            $resElem.append('<tr class="kill">' + killOutput + attkOut);
             won += articleStr.zkb.totalValue;
           } else {
-            $resElem.append('<tr class="loss">' + killOutput);
+            $resElem.append('<tr class="loss">' + killOutput + attkOut);
             lost += articleStr.zkb.totalValue;
           }
         }
+        // Show the totals for won lost and difference
         $('#diff').text('');
         if((won-lost) > 0){
           $('#diff').append('<div class="kill">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="kill">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
         } else if ((won-lost) < 0){
           $('#diff').append('<div class="loss">Kills: ' + Number(won).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">Losses: ' + Number(lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div><div class="loss">[+/-]: ' + Number(won-lost).toLocaleString('en', { minimumFractionDigits: 2 }) + ' ISK</div>');
         }
-
-
+        // Clear import timeout
         clearTimeout(killRequestTimeout);
       }
     });
-
     // END OF zkillboard Data Pull
     return false;
 }
-
-$(document).on('click','.loader', function(){
-  var id = this.id;
-  loadData(id, false);
-});
+// Add click events to import on click the correct character and corporation from zKillboard
 $(document).on('click','.pload', function(){
   var id = this.id;
   loadData(id, false);
@@ -118,7 +116,7 @@ $(document).on('click','.cload', function(){
   var id = this.id;
   loadData(id, true);
 });
-$('#form-container').click(function(){loadData(UKCR_ID, true);});
-$( document ).ready(function() {
+// Load the data when ready for the initial page view
+$(document).ready(function() {
     loadData(UKCR_ID, true);
 });
