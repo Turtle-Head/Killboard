@@ -26,5 +26,4 @@ This killboard is for the online game Eve Online.
 local deployment
 
 ## Bugs
-
--   Load kills: victim button presses do not separate correctly into kill loss stacks
+-   None yet
