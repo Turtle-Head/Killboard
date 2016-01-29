@@ -54,7 +54,8 @@ function loadData(id, data) {
               "shipPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].shipTypeID + '_32.png',
               "wepPic": 'http://imageserver.eveonline.com/Type/' + articleStr.attackers[atk].weaponTypeID + '_32.png',
               "corpKB": 'http://zkillboard.com/corporation/' + articleStr.attackers[atk].corporationID + '/',
-              "id": articleStr.attackers[atk].characterID
+              "id": articleStr.attackers[atk].characterID,
+              "cid": articleStr.attackers[atk].corporationID
             };
             if (Number(id) === Number(articleStr.attackers[atk].characterID)) {
               $('#killBoard').text(articleStr.attackers[atk].characterName);
@@ -70,7 +71,7 @@ function loadData(id, data) {
           var dok = '<div class="num">' + articleStr.killTime + '</div>';
           var formAtk = '<div class="dat" id="inv">Involved: '+ (articleStr.attackers.length) + '<div id="atta">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<button class="loader" id=' + atkCorp[fin].id + '>Load Kills</button><img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><a href="' + atkCorp[fin].corpKB + '"><img src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '"></a>  ' /*+ atkCorp[fin].corp*/ + '<a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
+            formAtk+='<button class="loader" id=' + atkCorp[fin].id + '>Load Kills</button><img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><img class="cload" id=' + atkCorp[fin].cid + ' src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '">  <a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
 
           }
           formAtk+='</div></div>';
@@ -108,6 +109,10 @@ function loadData(id, data) {
 $(document).on('click','.loader', function(){
   var id = this.id;
   loadData(id, false);
+});
+$(document).on('click','.cload', function(){
+  var id = this.id;
+  loadData(id, true);
 });
 $('#form-container').click(function(){loadData(UKCR_ID, true);});
 $( document ).ready(function() {
