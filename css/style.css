@@ -51,21 +51,22 @@ html{
 @media only screen and (max-width:480px){
   body{font-size:12px;}
 }
-#submit-btn{
+.loader {
   color: white;
-  background: red;
+  background: #001133;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  width: 300px;
+  width: 75px;
   height: 30px;
   -webkit-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
   -moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
   box-shadow: inset 0px 1px 0px #3e9cbf, 0px 5px 0px 0px #205c73, 0px 10px 5px #999;
-  font-size: 1em;
   font-family: "Shanti", monospace;
+  vertical-align: top;
+  margin-right: 3px;
 }
-#submit-btn:hover, #submit-btn:focus{
+.loader:hover, .loader:focus{
   /*reduce the size of the shadow*/
   -webkit-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
   -moz-box-shadow: inset 0px 1px 0px #3e9cbf, 0px 2px 0px 0px #205c73, 0px 2px 5px #999;
@@ -142,14 +143,15 @@ html{
   text-align:center;
   padding: 5%;
 }
-.loader {
-  height: 20px;
-  color: white;
-  background-color: #001133;
-}
 td {
   vertical-align: top;
   padding: 5px;
   text align: center;
   border: 0;
+}
+#killBoard {
+  font-size: 2em;
+}
+li {
+  vertical-align: top;
 }
