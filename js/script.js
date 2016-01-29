@@ -71,7 +71,7 @@ function loadData(id, data) {
           var dok = '<div class="num">' + articleStr.killTime + '</div>';
           var formAtk = '<div class="dat" id="inv">Involved: '+ (articleStr.attackers.length) + '<div id="atta">';
           for(var fin=0; fin < atkCorp.length; fin++){
-            formAtk+='<button class="loader" id=' + atkCorp[fin].id + '>Load Kills</button><img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><img class="cload" id=' + atkCorp[fin].cid + ' src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '">  <a href="' + atkCorp[fin].pilotkb + '"><img src="'+ atkCorp[fin].pilotP +'">  ' + atkCorp[fin].pilot + '</a><br>';
+            formAtk+='<img src="'+ atkCorp[fin].shipPic + '"><img src="'+ atkCorp[fin].wepPic + '"><img class="cload" id=' + atkCorp[fin].cid + ' src="' + atkCorp[fin].corpPic + '" alt="' + atkCorp[fin].corp + '">  <a href="#" class="pload" id=' + atkCorp[fin].id + '><img src="' + atkCorp[fin].pilotP + '">  ' + atkCorp[fin].pilot + '</a><br>';
 
           }
           formAtk+='</div></div>';
@@ -107,6 +107,10 @@ function loadData(id, data) {
 }
 
 $(document).on('click','.loader', function(){
+  var id = this.id;
+  loadData(id, false);
+});
+$(document).on('click','.pload', function(){
   var id = this.id;
   loadData(id, false);
 });
