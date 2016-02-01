@@ -131,3 +131,33 @@ td {
 #killBoard {
   font-size: 2em;
 }
+.button {
+  color: white;
+  background-color: #00004d;
+  border-radius: 15px;
+  height: 30px;
+  width: 150px;
+  flex-flow: row;
+  vertical-align: middle;
+  text-align: center;
+  margin: 5px;
+  padding: 5px;
+  -webkit-transition: width 2s, background-color 2s, -webkit-transform 2s;
+  transition: width 2s, background-color 2s, transform 2s;
+  cursor: pointer;
+}
+.button:hover {
+  border-radius: 15px;
+  background-color: #1a1aff;
+  width: 300px;
+  cursor: pointer;
+}
+.button:active {
+  background-color: black;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.flex {
+  flex-flow: row;
+  display: flex;
+}
