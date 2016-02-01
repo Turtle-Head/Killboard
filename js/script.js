@@ -59,16 +59,20 @@ function loadData(id, data) {
             };
             // Finding out who the killboard is about
             if (Number(id) === Number(articleStr.attackers[atk].characterID)) {
-              $('#killBoard').text(articleStr.attackers[atk].characterName);
+              $('#greeting').text(articleStr.attackers[atk].characterName);
+              $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_128.png');
             } else if (Number(id) === Number(articleStr.attackers[atk].corporationID)) {
-              $('#killBoard').text(articleStr.attackers[atk].corporationName);
+              $('#greeting').text(articleStr.attackers[atk].corporationName);
+              $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_128.png');
             }
           }
           // Finding out who the killboard is about
           if (Number(id) === Number(articleStr.victim.characterID)) {
-            $('#killBoard').text(articleStr.victim.characterName);
+            $('#greeting').text(articleStr.victim.characterName);
+            $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png');
           } else if (Number(id) === Number(articleStr.victim.corporationID)) {
-            $('#killBoard').text(articleStr.victim.corporationName);
+            $('#greeting').text(articleStr.victim.corporationName);
+            $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png');
           }
           // Sets up the display values
           var dok = '<div class="num">' + articleStr.killTime + '</div>';
