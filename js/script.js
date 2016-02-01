@@ -1,4 +1,6 @@
 var UKCR_ID = "98270563";
+var FM_ID = "98398761";
+var LONE_ID = "652229108";
 function loadData(id, data) {
     // Define the vars for easy use
     var $body = $('body');
