@@ -30,21 +30,29 @@ var displayStats = function(pilots) {
         index_losses = l;
       }
     }
-    var points_pilot = "http://imageserver.eveonline.com/Character/" + pilots[index_points].id + "_128.png";
-    var points_out = '<tr><td>Points Award</td><td class="pload" id=' + pilots[index_points].id + '><img src=' + points_pilot + '></td><td class="pload" id=' + pilots[index_points].id + '> ' + pilots[index_points].name + '</td><td>Top Points: ' + pilots[index_points].points + '</td></tr>';
-    var kills_pilot = "http://imageserver.eveonline.com/Character/" + pilots[index_kills].id + "_128.png";
-    var kills_out = '<tr><td>Kills Award</td><td class="pload" id=' + pilots[index_kills].id + '><img src=' + kills_pilot + '></td><td class="pload" id=' + pilots[index_kills].id + '> ' + pilots[index_kills].name + '</td><td>Top Kills: ' + pilots[index_kills].kills + '</td></tr>';
-    var won_pilot = "http://imageserver.eveonline.com/Character/" + pilots[index_won].id + "_128.png";
-    var won_out = '<tr><td>ISK Award</td><td class="pload" id=' + pilots[index_won].id + '><img src=' + won_pilot + '></td><td class="pload" id=' + pilots[index_won].id + '> ' + pilots[index_won].name + '</td><td>Top ISK: ' + pilots[index_won].won + '</td></tr>';
-    var losses_pilot = "http://imageserver.eveonline.com/Character/" + pilots[index_losses].id + "_128.png";
-    var losses_out = '<tr><td>Lemming Award</td><td class="pload" id=' + pilots[index_losses].id + '><img src=' + losses_pilot + '></td><td class="pload" id=' + pilots[index_losses].id + '> ' + pilots[index_losses].name + '</td><td>Top Losses: ' + pilots[index_losses].losses + '</td></tr>';
-    var table_out = won_out + points_out + kills_out + losses_out;
+    var table_out ='';
+    var points_out = '<tr class="aw_el"><td class="award">Points Award</td><td class="pload" id=' + pilots[index_points].id + '><img src=' + pilots[index_points].pic + '></td><td class="pload" id=' + pilots[index_points].id + '> ' + pilots[index_points].name + '</td><td>Top Points: ' + pilots[index_points].points + '</td></tr>';
+    var kills_out = '<tr class="aw_el"><td class="award">Kills Award</td><td class="pload" id=' + pilots[index_kills].id + '><img src=' + pilots[index_kills].pic + '></td><td class="pload" id=' + pilots[index_kills].id + '> ' + pilots[index_kills].name + '</td><td>Top Kills: ' + pilots[index_kills].kills + '</td></tr>';
+    var won_out = '<tr class="aw_el"><td class="award">ISK Award</td><td class="pload" id=' + pilots[index_won].id + '><img src=' + pilots[index_won].pic + ' ></td><td class="pload" id=' + pilots[index_won].id + '> ' + pilots[index_won].name + '</td><td>Top ISK: ' +  Number(pilots[index_won].won).toLocaleString('en', { minimumFractionDigits: 2 })+ '</td></tr>';
+    var losses_out = '<tr class="aw_el"><td class="award">Lemming Award</td><td class="pload" id=' + pilots[index_losses].id + '><img src=' + pilots[index_losses].pic + '></td><td class="pload" id=' + pilots[index_losses].id + '> ' + pilots[index_losses].name + '</td><td>Top Losses: ' + pilots[index_losses].losses + '</td></tr>';
+    if (pilots[index_points].points !== 0) {
+      table_out += points_out;
+    }
+    if (pilots[index_won].won !== 0) {
+      table_out += won_out;
+    }
+    if (pilots[index_kills].kills !== 0) {
+      table_out += kills_out;
+    }
+    if (pilots[index_losses].losses !== 0) {
+      table_out += losses_out;
+    }
+
     $('#statistics').text('');
     $('#statistics').append(table_out);
   }
   if (nop === 1) {
-    var pilot_pic = "http://imageserver.eveonline.com/Character/" + pilots[0].id + "_128.png";
-    var data_out = '<tr><td class="pload" id=' + pilots[0].id + '>' + pilot_pic + '</td><td  class="pload" id=' + pilots[0].id + '> ' + pilots[0].name + '</td><td class="cload" id=' + pilots[0].cid + '>' + pilots[0].corp + '</td>';
+    var data_out = '<tr class="aw_el"><td class="pload" id=' + pilots[0].id + '><img src=' + pilots[0].pic + ' ></td><td  class="pload" id=' + pilots[0].id + '> ' + pilots[0].name + '</td><td class="cload" id=' + pilots[0].cid + '>' + pilots[0].corp + '</td>';
     data_out += '<td>Points: ' + pilots[0].points + '</td><td>Kills: ' + pilots[0].kills + '</td><td>Losses: ' + pilots[0].losses + '</td></tr>';
     $('#statistics').text('');
     $('#statistics').append(data_out);
@@ -54,9 +62,9 @@ var displayStats = function(pilots) {
 
 // Find index of an array item
 // { SRC: http://stackoverflow.com/questions/13964155/get-javascript-object-from-array-of-objects-by-value-or-property }
-function findWithAttr(array, attr, value) {
+function findWithAttr(array, value) {
     for(var i = 0; i < array.length; i += 1) {
-        if(array[i][attr] === value) {
+        if(Number(array[i].id) === Number(value)) {
             return i;
         }
     }
@@ -67,13 +75,13 @@ function findWithAttr(array, attr, value) {
 var stats = function(id, cid, data) {
   var corpkb = false;
   var pilots = [];
-  if(id === cid){
+  if(Number(id) === Number(cid)){
     corpkb = true;
   }
   if(corpkb) {
     for(var i = 0; i < data.length; i++){
-      if(data[i].victim.corporationID == id) {
-        var z = findWithAttr(pilots, id, data[i].victim.characterID) || null;
+      if(Number(data[i].victim.corporationID) === Number(id)) {
+        var z = findWithAttr(pilots, Number(data[i].victim.characterID)) || null;
         if(!z) {
           pilots.push({
             'name': data[i].victim.characterName,
@@ -84,7 +92,8 @@ var stats = function(id, cid, data) {
             'lost': data[i].zkb.totalValue,
             'points': - data[i].zkb.points,
             'kills': 0,
-            'losses': 1
+            'losses': 1,
+            'pic': 'http://imageserver.eveonline.com/Character/' + data[i].victim.characterID + '_128.jpg'
           });
         }
         if(z) {
@@ -94,8 +103,8 @@ var stats = function(id, cid, data) {
         }
       }
       for(var x = 0; x < data[i].attackers.length; x++){
-        if (data[i].attackers[x].corporationID === id){
-          var y = findWithAttr(pilots, id, data[i].attackers[x].characterID) || null;
+        if (Number(data[i].attackers[x].corporationID) === Number(id)){
+          var y = findWithAttr(pilots, Number(data[i].attackers[x].characterID)) || null;
           if(!y) {
             pilots.push({
               'name': data[i].attackers[x].characterName,
@@ -106,7 +115,8 @@ var stats = function(id, cid, data) {
               'lost': 0,
               'points': data[i].zkb.points,
               'kills': 1,
-              'losses': 0
+              'losses': 0,
+              'pic': 'http://imageserver.eveonline.com/Character/' + data[i].attackers[x].characterID + '_128.jpg'
             });
           }
           if(y) {
@@ -120,9 +130,9 @@ var stats = function(id, cid, data) {
   }
   if(!corpkb) {
     for(var e = 0; e < data.length; e++){
-      if(data[e].victim.characterID == id) {
-        var f = findWithAttr(pilots, id, data[e].victim.characterID) || null;
-        if(!f) {
+      if(Number(data[e].victim.characterID) === Number(id)) {
+
+        if(pilots[0] === undefined) {
           pilots.push({
             'name': data[e].victim.characterName,
             'id': data[e].victim.characterID,
@@ -132,19 +142,19 @@ var stats = function(id, cid, data) {
             'lost': data[e].zkb.totalValue,
             'points': - data[e].zkb.points,
             'kills': 0,
-            'losses': 1
+            'losses': 1,
+            'pic': 'http://imageserver.eveonline.com/Character/' + data[e].victim.characterID + '_128.jpg'
           });
-        }
-        if(f) {
-          pilots[f].lost += data[e].zkb.totalValue;
-          pilots[f].points -= data[e].zkb.points;
-          pilots[f].losses += 1;
+        } else {
+          pilots[0].lost += data[e].zkb.totalValue;
+          pilots[0].points -= data[e].zkb.points;
+          pilots[0].losses += 1;
         }
       }
       for(var g = 0; g < data[e].attackers.length; g++){
-        if (data[e].attackers[g].characterID === id){
-          var h = findWithAttr(pilots, id, data[e].attackers[g].characterID) || null;
-          if(!h) {
+        if (Number(data[e].attackers[g].characterID) === Number(id)){
+
+          if(pilots[0] === undefined) {
             pilots.push({
               'name': data[e].attackers[g].characterName,
               'id': data[e].attackers[g].characterID,
@@ -154,13 +164,13 @@ var stats = function(id, cid, data) {
               'lost': 0,
               'points': data[e].zkb.points,
               'kills': 1,
-              'losses': 0
+              'losses': 0,
+              'pic': 'http://imageserver.eveonline.com/Character/' + data[e].attackers[g].characterID + '_128.jpg'
             });
-          }
-          if(h) {
-            pilots[h].won += data[e].zkb.totalValue;
-            pilots[h].points += data[e].zkb.points;
-            pilots[h].kills += 1;
+          } else {
+            pilots[0].won += data[e].zkb.totalValue;
+            pilots[0].points += data[e].zkb.points;
+            pilots[0].kills += 1;
           }
         }
       }
