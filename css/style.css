@@ -37,7 +37,7 @@ li{
 .pl-report{
   box-sizing: content-box;
   flex-flow: row;
-  width: 33%;
+  width: 25%;
 }
 div{
   padding: 10px;
@@ -162,17 +162,21 @@ td {
   display: flex;
 }
 .award {
-  -ms-transform: rotate(270deg);
-  -webkit-transform: rotate(270deg);
-  transform: rotate(270deg);
   text-align: center;
 
 }
 .aw_el {
   background-color: rgba(85, 244, 61,0.25);
   opacity: 0.85;
+  text-align: left;
+  font-size: 1.40em;
+  align-items: center;
 }
 .stats {
   display: flex;
   flex-flow: row;
+}
+td {
+  margin: 5px;
+  padding: 3px;
 }
