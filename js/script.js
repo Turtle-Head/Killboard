@@ -9,6 +9,8 @@ function loadData(id, data) {
     var $greeting = $('#greeting');
     var lost = 0;
     var won = 0;
+    var corpFound = false;
+    var cpID;
     // Clear out old data before new request
     $resElem.text("");
     $vicElem.text("");
@@ -60,22 +62,39 @@ function loadData(id, data) {
               "cid": articleStr.attackers[atk].corporationID
             };
             // Finding out who the killboard is about
-            if (Number(id) === Number(articleStr.attackers[atk].characterID)) {
-              $('#greeting').text(articleStr.attackers[atk].characterName);
-              $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_128.png');
-            } else if (Number(id) === Number(articleStr.attackers[atk].corporationID)) {
-              $('#greeting').text(articleStr.attackers[atk].corporationName);
-              $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_128.png');
+            if(!corpFound) {
+              if (Number(id) === Number(articleStr.attackers[atk].characterID)) {
+                $('#greeting').text(articleStr.attackers[atk].characterName);
+                $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_128.png');
+                cpID = articleStr.attackers[atk].corporationID;
+                corpFound = true;
+                stats(id, cpID, response);
+              } else if (Number(id) === Number(articleStr.attackers[atk].corporationID)) {
+                $('#greeting').text(articleStr.attackers[atk].corporationName);
+                $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.attackers[atk].corporationID + '_128.png');
+                cpID = articleStr.attackers[atk].corporationID;
+                corpFound = true;
+                stats(id, cpID, response);
+              }
             }
           }
           // Finding out who the killboard is about
-          if (Number(id) === Number(articleStr.victim.characterID)) {
-            $('#greeting').text(articleStr.victim.characterName);
-            $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png');
-          } else if (Number(id) === Number(articleStr.victim.corporationID)) {
-            $('#greeting').text(articleStr.victim.corporationName);
-            $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png');
+          if(!corpFound) {
+            if (Number(id) === Number(articleStr.victim.characterID)) {
+              $('#greeting').text(articleStr.victim.characterName);
+              $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png');
+              cpID = articleStr.victim.corporationID;
+              corpFound = true;
+              stats(id, cpID, response);
+            } else if (Number(id) === Number(articleStr.victim.corporationID)) {
+              $('#greeting').text(articleStr.victim.corporationName);
+              $('.bgimg').attr('src','http://imageserver.eveonline.com/Corporation/' + articleStr.victim.corporationID + '_128.png');
+              cpID = articleStr.victim.corporationID;
+              corpFound = true;
+              stats(id, cpID, response);
+            }
           }
+
           // Sets up the display values
           var dok = '<div class="num">' + articleStr.killTime + '</div>';
           var formAtk = '<div class="dat" id="inv">Involved: '+ (articleStr.attackers.length) + '<div id="atta">';
@@ -113,6 +132,124 @@ function loadData(id, data) {
     // END OF zkillboard Data Pull
     return false;
 }
+// Find index of an array item
+// { SRC: http://stackoverflow.com/questions/13964155/get-javascript-object-from-array-of-objects-by-value-or-property }
+function findWithAttr(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+}
+// Work with the data to calculate pilot totals
+// Send stats out to displayStats
+var stats = function(id, cid, data) {
+  var corpkb = false;
+  var pilots = [];
+  if(id === cid){
+    corpkb = true;
+  }
+  if(corpkb) {
+    for(var i = 0; i < data.length; i++){
+      if(data[i].victim.corporationID == id) {
+        var z = findWithAttr(pilots, id, data[i].victim.characterID) || null;
+        if(!z) {
+          pilots.push({
+            'name': data[i].victim.characterName,
+            'id': data[i].victim.characterID,
+            'corp': data[i].victim.corporationName,
+            'cid': data[i].victim.corporationID,
+            'won': 0,
+            'lost': data[i].zkb.totalValue,
+            'points': - data[i].zkb.points,
+            'kills': 0,
+            'losses': 1
+          });
+        }
+        if(z) {
+          pilots[z].lost += data[i].zkb.totalValue;
+          pilots[z].points -= data[i].zkb.points;
+          pilots[z].losses += 1;
+        }
+      }
+      for(var x = 0; x < data[i].attackers.length; x++){
+        if (data[i].attackers[x].corporationID === id){
+          var y = findWithAttr(pilots, id, data[i].attackers[x].characterID) || null;
+          if(!y) {
+            pilots.push({
+              'name': data[i].attackers[x].characterName,
+              'id': data[i].attackers[x].characterID,
+              'corp': data[i].attackers[x].corporationName,
+              'cid': data[i].attackers[x].corporationID,
+              'won': data[i].zkb.totalValue,
+              'lost': 0,
+              'points': data[i].zkb.points,
+              'kills': 1,
+              'losses': 0
+            });
+          }
+          if(y) {
+            pilots[y].won += data[i].zkb.totalValue;
+            pilots[y].points += data[i].zkb.points;
+            pilots[y].kills += 1;
+          }
+        }
+      }
+    }
+  }
+  if(!corpkb) {
+    for(var e = 0; e < data.length; e++){
+      if(data[e].victim.characterID == id) {
+        var f = findWithAttr(pilots, id, data[e].victim.characterID) || null;
+        if(!f) {
+          pilots.push({
+            'name': data[e].victim.characterName,
+            'id': data[e].victim.characterID,
+            'corp': data[e].victim.corporationName,
+            'cid': data[e].victim.corporationID,
+            'won': 0,
+            'lost': data[e].zkb.totalValue,
+            'points': - data[e].zkb.points,
+            'kills': 0,
+            'losses': 1
+          });
+        }
+        if(f) {
+          pilots[f].lost += data[e].zkb.totalValue;
+          pilots[f].points -= data[e].zkb.points;
+          pilots[f].losses += 1;
+        }
+      }
+      for(var g = 0; g < data[e].attackers.length; g++){
+        if (data[e].attackers[g].characterID === id){
+          var h = findWithAttr(pilots, id, data[e].attackers[g].characterID) || null;
+          if(!h) {
+            pilots.push({
+              'name': data[e].attackers[g].characterName,
+              'id': data[e].attackers[g].characterID,
+              'corp': data[e].attackers[g].corporationName,
+              'cid': data[e].attackers[g].corporationID,
+              'won': data[e].zkb.totalValue,
+              'lost': 0,
+              'points': data[e].zkb.points,
+              'kills': 1,
+              'losses': 0
+            });
+          }
+          if(h) {
+            pilots[h].won += data[e].zkb.totalValue;
+            pilots[h].points += data[e].zkb.points;
+            pilots[h].kills += 1;
+          }
+        }
+      }
+    }
+  }
+  displayStats(pilots);
+};
+var displayStats = function(pilots) {
+  
+};
 // Add click events to import on click the correct character and corporation from zKillboard
 $(document).on('click','.pload', function(){
   var id = this.id;
