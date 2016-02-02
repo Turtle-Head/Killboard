@@ -31,10 +31,10 @@ var displayStats = function(pilots) {
       }
     }
     var table_out ='';
-    var points_out = '<tr class="aw_el"><td class="award">Points Award</td><td class="pload" id=' + pilots[index_points].id + '><img src=' + pilots[index_points].pic + '></td><td class="pload" id=' + pilots[index_points].id + '> ' + pilots[index_points].name + '</td><td>Top Points: ' + pilots[index_points].points + '</td></tr>';
-    var kills_out = '<tr class="aw_el"><td class="award">Kills Award</td><td class="pload" id=' + pilots[index_kills].id + '><img src=' + pilots[index_kills].pic + '></td><td class="pload" id=' + pilots[index_kills].id + '> ' + pilots[index_kills].name + '</td><td>Top Kills: ' + pilots[index_kills].kills + '</td></tr>';
-    var won_out = '<tr class="aw_el"><td class="award">ISK Award</td><td class="pload" id=' + pilots[index_won].id + '><img src=' + pilots[index_won].pic + ' ></td><td class="pload" id=' + pilots[index_won].id + '> ' + pilots[index_won].name + '</td><td>Top ISK: ' +  Number(pilots[index_won].won).toLocaleString('en', { minimumFractionDigits: 2 })+ '</td></tr>';
-    var losses_out = '<tr class="aw_el"><td class="award">Lemming Award</td><td class="pload" id=' + pilots[index_losses].id + '><img src=' + pilots[index_losses].pic + '></td><td class="pload" id=' + pilots[index_losses].id + '> ' + pilots[index_losses].name + '</td><td>Top Losses: ' + pilots[index_losses].losses + '</td></tr>';
+    var points_out = '<tr class="aw_el"><td class="award">Top Points Award</td><td class="pload" id=' + pilots[index_points].id + '><img src=' + pilots[index_points].pic + '></td><td><a href="#" class="pload" id=' + pilots[index_points].id + ' >' + pilots[index_points].name + '</a></td><td>' + pilots[index_points].points + '</td></tr>';
+    var kills_out = '<tr class="aw_el"><td class="award">Top Kills Award</td><td class="pload" id=' + pilots[index_kills].id + '><img src=' + pilots[index_kills].pic + '></td><td><a href="#" class="pload" id=' + pilots[index_kills].id + ' >' + pilots[index_kills].name + '</a></td><td>' + pilots[index_kills].kills + '</td></tr>';
+    var won_out = '<tr class="aw_el"><td class="award">Top ISK Destroyed Award</td><td class="pload" id=' + pilots[index_won].id + '><img src=' + pilots[index_won].pic + ' ></td><td><a href="#" class="pload" id=' + pilots[index_won].id + ' >' + pilots[index_won].name + '</a></td><td>' +  Number(pilots[index_won].won).toLocaleString('en', { minimumFractionDigits: 2 })+ '</td></tr>';
+    var losses_out = '<tr class="aw_el"><td class="award">Top Losses</td><td class="pload" id=' + pilots[index_losses].id + '><img src=' + pilots[index_losses].pic + '></td><td><a href="#" class="pload" id=' + pilots[index_losses].id + ' >' + pilots[index_losses].name + '</a></td><td>' + pilots[index_losses].losses + '</td></tr>';
     if (pilots[index_points].points !== 0) {
       table_out += points_out;
     }
@@ -52,7 +52,7 @@ var displayStats = function(pilots) {
     $('#statistics').append(table_out);
   }
   if (nop === 1) {
-    var data_out = '<tr class="aw_el"><td class="pload" id=' + pilots[0].id + '><img src=' + pilots[0].pic + ' ></td><td  class="pload" id=' + pilots[0].id + '> ' + pilots[0].name + '</td><td class="cload" id=' + pilots[0].cid + '>' + pilots[0].corp + '</td>';
+    var data_out = '<tr class="aw_el"><td class="pload" id=' + pilots[0].id + '><img src=' + pilots[0].pic + ' ></td><td><a href="#" class="pload" id=' + pilots[0].id + ' >' + pilots[0].name + '</a></td><td><a href="#" class="cload" id=' + pilots[0].cid + ' >' + pilots[0].corp + '</a></td>';
     data_out += '<td>Points: ' + pilots[0].points + '</td><td>Kills: ' + pilots[0].kills + '</td><td>Losses: ' + pilots[0].losses + '</td></tr>';
     $('#statistics').text('');
     $('#statistics').append(data_out);
@@ -93,7 +93,7 @@ var stats = function(id, cid, data) {
             'points': - data[i].zkb.points,
             'kills': 0,
             'losses': 1,
-            'pic': 'http://imageserver.eveonline.com/Character/' + data[i].victim.characterID + '_128.jpg'
+            'pic': 'http://imageserver.eveonline.com/Character/' + data[i].victim.characterID + '_32.jpg'
           });
         }
         if(z) {
@@ -116,7 +116,7 @@ var stats = function(id, cid, data) {
               'points': data[i].zkb.points,
               'kills': 1,
               'losses': 0,
-              'pic': 'http://imageserver.eveonline.com/Character/' + data[i].attackers[x].characterID + '_128.jpg'
+              'pic': 'http://imageserver.eveonline.com/Character/' + data[i].attackers[x].characterID + '_32.jpg'
             });
           }
           if(y) {
@@ -143,7 +143,7 @@ var stats = function(id, cid, data) {
             'points': - data[e].zkb.points,
             'kills': 0,
             'losses': 1,
-            'pic': 'http://imageserver.eveonline.com/Character/' + data[e].victim.characterID + '_128.jpg'
+            'pic': 'http://imageserver.eveonline.com/Character/' + data[e].victim.characterID + '_32.jpg'
           });
         } else {
           pilots[0].lost += data[e].zkb.totalValue;
@@ -165,7 +165,7 @@ var stats = function(id, cid, data) {
               'points': data[e].zkb.points,
               'kills': 1,
               'losses': 0,
-              'pic': 'http://imageserver.eveonline.com/Character/' + data[e].attackers[g].characterID + '_128.jpg'
+              'pic': 'http://imageserver.eveonline.com/Character/' + data[e].attackers[g].characterID + '_32.jpg'
             });
           } else {
             pilots[0].won += data[e].zkb.totalValue;
