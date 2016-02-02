@@ -162,8 +162,7 @@ td {
   display: flex;
 }
 .award {
-  text-align: center;
-
+  text-align: left;
 }
 .aw_el {
   background-color: rgba(85, 244, 61,0.25);
