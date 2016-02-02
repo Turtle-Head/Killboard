@@ -15,8 +15,7 @@ This killboard is for the online game Eve Online.
 ## APIs
 
 -   zKillboard
-
--   CREST
+-   CREST image library
 
 ## General Use
 
@@ -26,4 +25,5 @@ This killboard is for the online game Eve Online.
 local deployment
 
 ## Bugs
--   None yet
+
+-   stats function doesn't populate the pilots array properly
