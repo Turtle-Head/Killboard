@@ -35,11 +35,11 @@ var displayStats = function(pilots) {
     var kills_out = '<tr class="aw_el"><td class="award">Top Kills Award</td><td class="pload" id=' + pilots[index_kills].id + '><img src=' + pilots[index_kills].pic + '></td><td><a href="#" class="pload" id=' + pilots[index_kills].id + ' >' + pilots[index_kills].name + '</a></td><td>' + pilots[index_kills].kills + '</td></tr>';
     var won_out = '<tr class="aw_el"><td class="award">Top ISK Destroyed Award</td><td class="pload" id=' + pilots[index_won].id + '><img src=' + pilots[index_won].pic + ' ></td><td><a href="#" class="pload" id=' + pilots[index_won].id + ' >' + pilots[index_won].name + '</a></td><td>' +  Number(pilots[index_won].won).toLocaleString('en', { minimumFractionDigits: 2 })+ '</td></tr>';
     var losses_out = '<tr class="aw_el"><td class="award">Top Losses</td><td class="pload" id=' + pilots[index_losses].id + '><img src=' + pilots[index_losses].pic + '></td><td><a href="#" class="pload" id=' + pilots[index_losses].id + ' >' + pilots[index_losses].name + '</a></td><td>' + pilots[index_losses].losses + '</td></tr>';
-    if (pilots[index_points].points !== 0) {
-      table_out += points_out;
-    }
     if (pilots[index_won].won !== 0) {
       table_out += won_out;
+    }
+    if (pilots[index_points].points !== 0) {
+      table_out += points_out;
     }
     if (pilots[index_kills].kills !== 0) {
       table_out += kills_out;
