@@ -57,7 +57,6 @@ var displayStats = function(pilots) {
     $('#statistics').text('');
     $('#statistics').append(data_out);
   }
-  console.log('Done display');
 };
 
 // Find index of an array item
@@ -82,7 +81,7 @@ var stats = function(id, cid, data) {
     for(var i = 0; i < data.length; i++){
       if(Number(data[i].victim.corporationID) === Number(id)) {
         var z = findWithAttr(pilots, Number(data[i].victim.characterID)) || null;
-        if(!z) {
+        if((!z) && ((pilots.length !== 1) || (Number(pilots[0].id) !== Number(data[i].victim.characterID)))) {
           pilots.push({
             'name': data[i].victim.characterName,
             'id': data[i].victim.characterID,
@@ -90,22 +89,25 @@ var stats = function(id, cid, data) {
             'cid': data[i].victim.corporationID,
             'won': 0,
             'lost': data[i].zkb.totalValue,
-            'points': - data[i].zkb.points,
+            'points': 0 - data[i].zkb.points,
             'kills': 0,
             'losses': 1,
             'pic': 'http://imageserver.eveonline.com/Character/' + data[i].victim.characterID + '_32.jpg'
           });
-        }
-        if(z) {
+        } else if(z) {
           pilots[z].lost += data[i].zkb.totalValue;
           pilots[z].points -= data[i].zkb.points;
           pilots[z].losses += 1;
+        } else if ((pilots.length === 1) && (Number(pilots[0].id) === Number(data[i].victim.characterID))){
+          pilots[0].lost += data[i].zkb.totalValue;
+          pilots[0].points -= data[i].zkb.points;
+          pilots[0].losses += 1;
         }
       }
       for(var x = 0; x < data[i].attackers.length; x++){
         if (Number(data[i].attackers[x].corporationID) === Number(id)){
           var y = findWithAttr(pilots, Number(data[i].attackers[x].characterID)) || null;
-          if(!y) {
+          if((!y) && ((pilots.length !== 1) || (Number(pilots[0].id) !== Number(data[i].attackers[x].characterID)))) {
             pilots.push({
               'name': data[i].attackers[x].characterName,
               'id': data[i].attackers[x].characterID,
@@ -118,11 +120,14 @@ var stats = function(id, cid, data) {
               'losses': 0,
               'pic': 'http://imageserver.eveonline.com/Character/' + data[i].attackers[x].characterID + '_32.jpg'
             });
-          }
-          if(y) {
+          } else if(y) {
             pilots[y].won += data[i].zkb.totalValue;
             pilots[y].points += data[i].zkb.points;
             pilots[y].kills += 1;
+          } else if((pilots.length === 1) && (Number(pilots[0].id) === Number(data[i].attackers[x].characterID))) {
+            pilots[0].won += data[i].zkb.totalValue;
+            pilots[0].points += data[i].zkb.points;
+            pilots[0].kills += 1;
           }
         }
       }
@@ -177,9 +182,6 @@ var stats = function(id, cid, data) {
     }
   }
   displayStats(pilots);
-  console.log('Passed to display function');
-  console.log(pilots);
-  console.log(data);
 };
 
 function loadData(id, data) {
@@ -219,10 +221,8 @@ function loadData(id, data) {
       //jsonp: "callback",
       success: function( response ){
         // Writes kill articles out to page
-        console.log(id);
         $('#month').text( m + '/' + y);
         var articleList = response;
-        console.log(articleList);
         for (var i=0; i < articleList.length; i++) {
           articleStr = articleList[i];
           var url = 'http://zkillboard.com/kill/' + articleStr.killID + '/';
