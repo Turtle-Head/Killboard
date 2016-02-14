@@ -26,4 +26,4 @@ local deployment
 
 ## Bugs
 
--   stats function doesn't populate the pilots array properly
+-
