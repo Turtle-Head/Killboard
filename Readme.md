@@ -2,6 +2,8 @@ author: James Fehr
 
 email: fehr.james@gmail.com
 
+<img src="https://github.com/Turtle-Head/Killboard/blob/master/star.png">
+
 # Killboard
 
 This killboard is for the online game Eve Online.
