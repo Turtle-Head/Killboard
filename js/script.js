@@ -1,3 +1,7 @@
+// js/script.js
+// Author: James Fehr
+
+// {Ref 3} IDs section
 var UKCR_ID = "98270563";
 var FM_ID = "98398761";
 var LONE_ID = "652229108";
@@ -324,7 +328,7 @@ $(document).on('click','.cload', function(){
   var id = this.id;
   loadData(id, true);
 });
-// Load the data when ready for the initial page view
+// {Ref 1} Load the default corp data when ready for the initial page view
 $(document).ready(function() {
     loadData(UKCR_ID, true);
 });
