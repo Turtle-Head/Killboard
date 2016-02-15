@@ -32,7 +32,7 @@ local deployment
 
 -   New Corporate IDs can be placed at "{Ref 3} IDs section"
 
--   You can find your corporate ID by going to <a href="zkillboard.com">zKillboard</a> and searching for your corporation, zkillboard.com/corporation/98420562/ will be similar to the address that zkillboard pulls up, use the numbers after corporation for your ID
+-   You can find your corporate ID by going to <a href="zkillboard.com">zKillboard</a> and searching for your corporation, zkillboard.com/corporation/########/ will be similar to the address that zkillboard pulls up, use the numbers after corporation for your ID
 
 ## Bugs
 
