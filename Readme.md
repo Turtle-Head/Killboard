@@ -1,6 +1,6 @@
-<author: James Fehr>
+author: James Fehr
 
-<email fehr.james@gmail.com>
+email: fehr.james@gmail.com
 
 # Killboard
 
