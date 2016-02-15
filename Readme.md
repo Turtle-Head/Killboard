@@ -1,6 +1,6 @@
 <author: James Fehr>
 
-<email: fehr.james@gmail.com>
+<a href="mailto:fehr.james@gmail.com>Contact James Fehr about this project</a>
 
 # Killboard
 
