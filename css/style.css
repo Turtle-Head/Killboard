@@ -138,9 +138,8 @@ td {
   height: 30px;
   width: 150px;
   flex-flow: row;
-  vertical-align: middle;
   text-align: center;
-  margin: 5px;
+  margin: 5px auto 5px auto;
   padding: 5px;
   -webkit-transition: width 2s, background-color 2s, -webkit-transform 2s;
   transition: width 2s, background-color 2s, transform 2s;
@@ -175,4 +174,12 @@ td {
   display: flex;
   flex-flow: row;
   opacity: 0.85;
+  margin: 0 auto 0 auto;
+}
+.nav {
+  margin-left: auto;
+  margin-right: auto;
+}
+.results-container {
+  margin: 0 auto 0 auto;
 }
