@@ -210,7 +210,7 @@ function loadData(id, data) {
     var search = "https://zkillboard.com/api/";
     // Set search to corporation or character API
     if (data){
-      search += "corporationID/" + id + "/year/" + y + "/month/" + m + "/";
+      search += "w-space/"+"corporationID/" + id + "/year/" + y + "/month/" + m + "/";
     } else if (!data){
       search += "characterID/" + id + "/year/" + y + "/month/" + m + "/";
     }
